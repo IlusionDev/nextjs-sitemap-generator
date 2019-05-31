@@ -54,7 +54,7 @@ class SiteMapper {
             }
             let fileExtension =  site.split('.').pop().length;
             let fileNameWithoutExtension = site.substring(0, site.length - (fileExtension + 1));
-            let newDir = dir.replace(this.pagesdirectory,'').replace('\\' ,'/');
+            let newDir = dir.replace(this.pagesdirectory,'').replace(/\\/g ,'/');
             let alternates = '';
             for (let langSite in this.alternatesUrls) {
                 alternates += `<xhtml:link rel="alernate" hreflang="${langSite}" href="${

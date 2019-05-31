@@ -37,3 +37,6 @@ For now the **ignoredPaths** matches whatrever cointaning the thing you put, ign
 In the next versions this going to be fixed.
 
 
+
+
+

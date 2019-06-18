@@ -7,6 +7,9 @@ This module have been created to be used at node server side of NextJs.
 It is meant to be used in server.js so that when the server is initialized it will only run once.
 If you place it in any of the request handler of the node server performance may be affected.
 
+#### Usage for static HTML apps
+
+If you are exporting the next project as a static HTML app, create a file at the base of the app with the option `pagesDirectory` pointing to the static files output folder and run it with `node fileName.js`.
 
 ## OPTIONS
 

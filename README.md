@@ -53,7 +53,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-<table><tr><td align="center"><a href="https://github.com/getriot"><img src="https://avatars3.githubusercontent.com/u/2164596?v=4" width="100px;" alt="Daniele Simeone"/><br /><sub><b>Daniele Simeone</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=getriot" title="Code">💻</a></td></tr></table>
+<table><tr><td align="center"><a href="https://github.com/getriot"><img src="https://avatars3.githubusercontent.com/u/2164596?v=4" width="100px;" alt="Daniele Simeone"/><br /><sub><b>Daniele Simeone</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=getriot" title="Code">💻</a></td>
+<td align="center"><a href="https://github.com/illiteratewriter"><img src="https://avatars1.githubusercontent.com/u/5787110?s=400&v=4" width="100px;" alt="illiteratewriter"/><br /><sub><b>illiteratewriter</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=illiteratewriter" title="Code">💻</a></td></tr>
+</table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 

@@ -9,12 +9,14 @@ If you place it in any of the request handler of the node server performance may
 
 #### Usage for static HTML apps
 
-If you are exporting the next project as a static HTML app, create a file at the base of the app with the option `pagesDirectory` pointing to the static files output folder and run it with `node fileName.js`.
+If you are exporting the next project as a static HTML app, create a next-sitemap-generator script file in the base directory.
+The option `pagesDirectory` should point to the static files output folder.
+After generating the output files, run `node your_nextjs_sitemap_generator.js` to generate the sitemap.
 
 ## OPTIONS
 
     const sitemap = require('nextjs-sitemap-generator');  
-      
+
     sitemap({  
       alternateUrls: {  
 	      en: 'https://example.en',  

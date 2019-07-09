@@ -1,6 +1,7 @@
 const fs = require('fs');
-const moment = require('moment');
+const dateFns = require('date-fns');
 const path = require('path');
+
 class SiteMapper {
 
 
@@ -38,7 +39,7 @@ class SiteMapper {
 
     sitemapMapper(dir) {
 
-        let date = moment().format('YYYY-MM-DD');
+        let date = dateFns.format(new Date(), 'YYYY-MM-DD');
         let data = fs.readdirSync(dir);
         for (let site of data) {
             if (site[0] === '_' || site[0] === '.') continue;
@@ -52,9 +53,9 @@ class SiteMapper {
                 this.sitemapMapper(dir + path.sep + site);
                 continue;
             }
-            let fileExtension =  site.split('.').pop().length;
+            let fileExtension = site.split('.').pop().length;
             let fileNameWithoutExtension = site.substring(0, site.length - (fileExtension + 1));
-            let newDir = dir.replace(this.pagesdirectory,'').replace(/\\/g ,'/');
+            let newDir = dir.replace(this.pagesdirectory, '').replace(/\\/g, '/');
             let alternates = '';
             for (let langSite in this.alternatesUrls) {
                 alternates += `<xhtml:link rel="alernate" hreflang="${langSite}" href="${

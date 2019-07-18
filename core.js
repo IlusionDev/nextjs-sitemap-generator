@@ -55,6 +55,7 @@ class SiteMapper {
             }
             let fileExtension = site.split('.').pop().length;
             let fileNameWithoutExtension = site.substring(0, site.length - (fileExtension + 1));
+            fileNameWithoutExtension = fileNameWithoutExtension === 'index' ? '' : fileNameWithoutExtension;
             let newDir = dir.replace(this.pagesdirectory, '').replace(/\\/g, '/');
             let alternates = '';
             for (let langSite in this.alternatesUrls) {

@@ -15,16 +15,14 @@ class SiteMapper {
                     targetDirectory
                 }) {
 
-                    
-                    console.log('aaa', showIndexInUrl)
 
-                    this.alternatesUrls = alternateUrls || {};
-                    this.baseUrl = baseUrl;
-                    this.ignoredPaths = ignoredPaths || [];
-                    this.pagesdirectory = pagesDirectory;
-                    this.showIndexInUrl = showIndexInUrl || false;
-                    this.sitemapPath = sitemapPath;
-                    this.targetDirectory = targetDirectory;
+        this.alternatesUrls = alternateUrls || {};
+        this.baseUrl = baseUrl;
+        this.ignoredPaths = ignoredPaths || [];
+        this.pagesdirectory = pagesDirectory;
+        this.showIndexInUrl = showIndexInUrl || false;
+        this.sitemapPath = sitemapPath;
+        this.targetDirectory = targetDirectory;
         this.sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 `;

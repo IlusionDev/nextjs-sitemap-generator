@@ -12,7 +12,7 @@ class SiteMapper {
                     pagesDirectory,
                     showIndexInUrl,
                     sitemapPath,
-                    targetDirectory,
+                    targetDirectory
                 }) {
 
                     

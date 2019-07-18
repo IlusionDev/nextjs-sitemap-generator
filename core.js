@@ -10,17 +10,21 @@ class SiteMapper {
                     baseUrl,
                     ignoredPaths,
                     pagesDirectory,
+                    showIndexInUrl,
                     sitemapPath,
-                    targetDirectory
+                    targetDirectory,
                 }) {
 
+                    
+                    console.log('aaa', showIndexInUrl)
 
-        this.alternatesUrls = alternateUrls || {};
-        this.baseUrl = baseUrl;
-        this.ignoredPaths = ignoredPaths || [];
-        this.pagesdirectory = pagesDirectory;
-        this.sitemapPath = sitemapPath;
-        this.targetDirectory = targetDirectory;
+                    this.alternatesUrls = alternateUrls || {};
+                    this.baseUrl = baseUrl;
+                    this.ignoredPaths = ignoredPaths || [];
+                    this.pagesdirectory = pagesDirectory;
+                    this.showIndexInUrl = showIndexInUrl || false;
+                    this.sitemapPath = sitemapPath;
+                    this.targetDirectory = targetDirectory;
         this.sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 `;
@@ -55,7 +59,7 @@ class SiteMapper {
             }
             let fileExtension = site.split('.').pop().length;
             let fileNameWithoutExtension = site.substring(0, site.length - (fileExtension + 1));
-            fileNameWithoutExtension = fileNameWithoutExtension === 'index' ? '' : fileNameWithoutExtension;
+            fileNameWithoutExtension = !this.showIndexInUrl && fileNameWithoutExtension === 'index' ? '' : fileNameWithoutExtension;
             let newDir = dir.replace(this.pagesdirectory, '').replace(/\\/g, '/');
             let alternates = '';
             for (let langSite in this.alternatesUrls) {

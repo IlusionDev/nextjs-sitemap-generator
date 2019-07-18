@@ -36,6 +36,7 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
  - **baseUrl**:  The url that it's going to be used at the beginning of each page.
  - **ignoredPaths**:  File or directory to not map (like admin routes).(OPTIONAL)
  - **pagesDirectory**:  The directory where Nextjs pages live. You can use another directory while they are nextjs pages. **It must to be an absolute path**.
+ - **showIndexInUrl**: Whether index file should be in URL or just directory ending with the slash (OPTIONAL)
  - **targetDirectory**:  The directory where sitemap.xml going to be written.
 
 ## Considerations

@@ -1,5 +1,5 @@
 ![npmv1](https://img.shields.io/npm/v/nextjs-sitemap-generator.svg)
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 
 Simple sitemap.xml mapper for NextJs proyects.
 ## Usage
@@ -53,8 +53,11 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-<table><tr><td align="center"><a href="https://github.com/getriot"><img src="https://avatars3.githubusercontent.com/u/2164596?v=4" width="100px;" alt="Daniele Simeone"/><br /><sub><b>Daniele Simeone</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=getriot" title="Code">💻</a></td>
-<td align="center"><a href="https://github.com/illiteratewriter"><img src="https://avatars1.githubusercontent.com/u/5787110?s=400&v=4" width="100px;" alt="illiteratewriter"/><br /><sub><b>illiteratewriter</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=illiteratewriter" title="Doc">📖</a></td></tr>
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/getriot"><img src="https://avatars3.githubusercontent.com/u/2164596?v=4" width="100px;" alt="Daniele Simeone"/><br /><sub><b>Daniele Simeone</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=getriot" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/goran"><img src="https://avatars2.githubusercontent.com/u/3824?v=4" width="100px;" alt="goran"/><br /><sub><b>goran</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=goran" title="Code">💻</a></td>
+  </tr>
 </table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->

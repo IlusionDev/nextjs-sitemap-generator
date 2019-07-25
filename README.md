@@ -40,7 +40,7 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
  - **targetDirectory**:  The directory where sitemap.xml going to be written.
 
 ## Considerations
-For now the **ignoredPaths** matches whatrever cointaning the thing you put, ignoring if ther are files or directories.
+For now the **ignoredPaths** matches whatever cointaning the thing you put, ignoring if there are files or directories.
 In the next versions this going to be fixed.
 
 

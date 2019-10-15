@@ -39,7 +39,8 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
  - **ignoredPaths**:  File or directory to not map (like admin routes).(OPTIONAL)
  - **pagesDirectory**:  The directory where Nextjs pages live. You can use another directory while they are nextjs pages. **It must to be an absolute path**.
  - **targetDirectory**:  The directory where sitemap.xml going to be written.
- - **nextConfigPath**:  Calls `exportPathMap` if exported from `nextConfigPath` js file.
+ - **nextConfigPath**(Used for dynamic routes):  Calls `exportPathMap` if exported from `nextConfigPath` js file.
+  See this to understand how to do it (https://github.com/zeit/next.js/blob/canary/examples/with-static-export/next.config.js)
 
 ## Considerations
 For now the **ignoredPaths** matches whatever cointaning the thing you put, ignoring if there are files or directories.

@@ -10,9 +10,10 @@
     "nextjs",
     "sitemap.xml",
     "pages",
-    "node"
+    "node",
+    "sitemap"
   ],
-  "author": "Adrián Alonso",
+  "author": "Adrián Alonso Vergara",
   "license": "MIT",
   "dependencies": {
     "date-fns": "^1.30.1"

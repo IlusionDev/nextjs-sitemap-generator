@@ -1,18 +1,18 @@
 {
   "name": "nextjs-sitemap-generator",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Generate sitemap.xml from nextjs pages",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "nextjs",
     "sitemap.xml",
     "pages",
-    "node"
+    "node",
+    "sitemap"
   ],
-  "author": "Adrián Alonso",
+  "author": "Adrián Alonso Vergara",
   "license": "MIT",
   "dependencies": {
     "date-fns": "^1.30.1"

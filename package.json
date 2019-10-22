@@ -4,7 +4,6 @@
   "description": "Generate sitemap.xml from nextjs pages",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "nextjs",

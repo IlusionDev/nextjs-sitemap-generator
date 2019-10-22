@@ -1,6 +1,9 @@
 ![npmv1](https://img.shields.io/npm/v/nextjs-sitemap-generator.svg)
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 
+You can make donations for the maintenance of the project.
+[Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YFXG8SLXPEVXN&source=url)
+
 Simple sitemap.xml mapper for NextJs proyects.
 ## Usage
 This module have been created to be used at node server side of NextJs.

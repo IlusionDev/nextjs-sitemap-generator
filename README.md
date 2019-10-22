@@ -32,6 +32,10 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
       pagesDirectory: __dirname + "\\pages",  
       targetDirectory : 'static/',
       nextConfigPath: __dirname + "\\next.config.js"
+      ignoredExtensions: [
+            'png',
+            'jpg'
+      ]
     });
 
 ## OPTIONS description
@@ -40,6 +44,7 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
  - **baseUrl**:  The url that it's going to be used at the beginning of each page.
  - **ignoreIndexFiles**: Whether index file should be in URL or just directory ending with the slash (OPTIONAL)
  - **ignoredPaths**:  File or directory to not map (like admin routes).(OPTIONAL)
+ - **ignoredExtensions**:  Ignore files by extension.(OPTIONAL)
  - **pagesDirectory**:  The directory where Nextjs pages live. You can use another directory while they are nextjs pages. **It must to be an absolute path**.
  - **targetDirectory**:  The directory where sitemap.xml going to be written.
  - **nextConfigPath**(Used for dynamic routes):  Calls `exportPathMap` if exported from `nextConfigPath` js file.

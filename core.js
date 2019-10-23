@@ -85,8 +85,7 @@ class SiteMapper {
             let toIgnoreExtension = false;
 
             for (let extensionToIgnore of this.ignoredExtensions) {
-                if (extensionToIgnore === fileExtension)
-                    toIgnoreExtension = true;
+                if (extensionToIgnore === fileExtension) toIgnoreExtension = true;
             }
 
             if (toIgnoreExtension) continue;
@@ -100,9 +99,7 @@ class SiteMapper {
                 this.ignoreIndexFiles && fileNameWithoutExtension === "index"
                     ? ""
                     : fileNameWithoutExtension;
-            let newDir = dir
-                .replace(this.pagesdirectory, "")
-                .replace(/\\/g, "/");
+            let newDir = dir.replace(this.pagesdirectory, "").replace(/\\/g, "/");
 
             if (this.ignoreIndexFiles && newDir === "/index") {
                 newDir = "";
@@ -144,7 +141,7 @@ class SiteMapper {
             fs.writeFileSync(
                 path.resolve(this.targetDirectory, "./sitemap.xml"),
                 xmlObject,
-                { flag: "as" }
+                {flag: "as"}
             );
         }
     }

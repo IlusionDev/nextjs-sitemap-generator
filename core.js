@@ -4,16 +4,16 @@ const path = require("path");
 
 class SiteMapper {
     constructor({
-                    alternateUrls,
-                    baseUrl,
-                    ignoreIndexFiles,
-                    ignoredPaths,
-                    pagesDirectory,
-                    sitemapPath,
-                    targetDirectory,
-                    nextConfigPath,
-                    ignoredExtensions
-                }) {
+        alternateUrls,
+        baseUrl,
+        ignoreIndexFiles,
+        ignoredPaths,
+        pagesDirectory,
+        sitemapPath,
+        targetDirectory,
+        nextConfigPath,
+        ignoredExtensions
+    }) {
         this.alternatesUrls = alternateUrls || {};
         this.baseUrl = baseUrl;
         this.ignoredPaths = ignoredPaths || [];
@@ -100,6 +100,10 @@ class SiteMapper {
                     ? ""
                     : fileNameWithoutExtension;
             let newDir = dir.replace(this.pagesdirectory, "").replace(/\\/g, "/");
+
+            if (this.ignoreIndexFiles && newDir === "/index") {
+                newDir = "";
+            }
 
             let pagePath = newDir + "/" + fileNameWithoutExtension;
             pathMap[pagePath] = {

@@ -29,6 +29,10 @@ class SiteMapper {
 
         if (this.nextConfigPath) {
             this.nextConfig = require(nextConfigPath);
+
+            if(typeof this.nextConfig === "function"){
+                this.nextConfig = this.nextConfig([], {});
+            }
         }
     }
 

@@ -134,7 +134,7 @@ class SiteMapper {
             let alternates = "";
 
             for (let langSite in this.alternatesUrls) {
-                alternates += `<xhtml:link rel="alernate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${pagePath}" />`;
+                alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${pagePath}" />`;
             }
 
             let xmlObject =

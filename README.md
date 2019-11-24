@@ -55,7 +55,7 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
  - **targetDirectory**:  The directory where sitemap.xml going to be written.
  - **pagesConfig**:  Object configuration of priority and changefreq per route.(OPTIONAL)
  - **nextConfigPath**(Used for dynamic routes):  Calls `exportPathMap` if exported from `nextConfigPath` js file.
-  See this to understand how to do it (https://github.com/zeit/next.js/blob/canary/examples/with-static-export/next.config.js)(OPTIONAL)
+  See this to understand how to do it (https://github.com/zeit/next.js/blob/canary/examples/with-static-export/next.config.js) (OPTIONAL)
 
 ## Considerations
 For now the **ignoredPaths** matches whatever cointaning the thing you put, ignoring if there are files or directories.

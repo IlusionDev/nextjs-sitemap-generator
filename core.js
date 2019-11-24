@@ -12,8 +12,10 @@ class SiteMapper {
         sitemapPath,
         targetDirectory,
         nextConfigPath,
-        ignoredExtensions
+        ignoredExtensions,
+        pagesConfig
     }) {
+        this.pagesConfig = pagesConfig || {};
         this.alternatesUrls = alternateUrls || {};
         this.baseUrl = baseUrl;
         this.ignoredPaths = ignoredPaths || [];
@@ -30,7 +32,7 @@ class SiteMapper {
         if (this.nextConfigPath) {
             this.nextConfig = require(nextConfigPath);
 
-            if(typeof this.nextConfig === "function"){
+            if (typeof this.nextConfig === "function") {
                 this.nextConfig = this.nextConfig([], {});
             }
         }
@@ -123,7 +125,12 @@ class SiteMapper {
         const exportPathMap = this.nextConfig && this.nextConfig.exportPathMap;
 
         if (exportPathMap) {
+            try{
             pathMap = await exportPathMap(pathMap, {});
+            }
+            catch(err){
+                console.log(err);
+            }
         }
 
         const paths = Object.keys(pathMap);
@@ -132,15 +139,25 @@ class SiteMapper {
         for (var i = 0, len = paths.length; i < len; i++) {
             let pagePath = paths[i];
             let alternates = "";
+            let priority = "";
+            let changefreq = "";
 
             for (let langSite in this.alternatesUrls) {
                 alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${pagePath}" />`;
             }
 
-            let xmlObject =
-                `<url><loc>${this.baseUrl}${pagePath}</loc>` +
-                alternates +
-                `<lastmod>${date}</lastmod></url>`;
+            if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
+                let pageConfig = this.pagesConfig[pagePath];
+                priority = pageConfig.priority ? `<priority>${pageConfig.priority}</priority>` : '';
+                changefreq = pageConfig.changefreq ? `<changefreq>${pageConfig.changefreq}</changefreq>` : '';
+            }
+
+            let xmlObject = `<url><loc>${this.baseUrl}${pagePath}</loc>
+                ${alternates}
+                ${priority}
+                ${changefreq}
+                <lastmod>${date}</lastmod>
+                </url>`;
 
             fs.writeFileSync(
                 path.resolve(this.targetDirectory, "./sitemap.xml"),

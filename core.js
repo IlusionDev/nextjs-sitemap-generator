@@ -63,6 +63,7 @@ class SiteMapper {
      */
     buildPathMap(dir) {
         var pathMap = {};
+        const {exportTrailingSlash} = this.nextConfig || {};
 
         let data = fs.readdirSync(dir);
         for (let site of data) {
@@ -111,7 +112,9 @@ class SiteMapper {
                 newDir = "";
             }
 
-            let pagePath = newDir + "/" + fileNameWithoutExtension;
+            let pagePath = [newDir, fileNameWithoutExtension]
+                .filter(val => exportTrailingSlash || !!val)
+                .join("/");
             pathMap[pagePath] = {
                 page: pagePath
             };
@@ -125,10 +128,9 @@ class SiteMapper {
         const exportPathMap = this.nextConfig && this.nextConfig.exportPathMap;
 
         if (exportPathMap) {
-            try{
-            pathMap = await exportPathMap(pathMap, {});
-            }
-            catch(err){
+            try {
+                pathMap = await exportPathMap(pathMap, {});
+            } catch (err) {
                 console.log(err);
             }
         }
@@ -148,8 +150,12 @@ class SiteMapper {
 
             if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
                 let pageConfig = this.pagesConfig[pagePath];
-                priority = pageConfig.priority ? `<priority>${pageConfig.priority}</priority>` : '';
-                changefreq = pageConfig.changefreq ? `<changefreq>${pageConfig.changefreq}</changefreq>` : '';
+                priority = pageConfig.priority
+                    ? `<priority>${pageConfig.priority}</priority>`
+                    : "";
+                changefreq = pageConfig.changefreq
+                    ? `<changefreq>${pageConfig.changefreq}</changefreq>`
+                    : "";
             }
 
             let xmlObject = `<url><loc>${this.baseUrl}${pagePath}</loc>

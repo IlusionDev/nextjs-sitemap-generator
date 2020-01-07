@@ -31,7 +31,7 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
       ignoredPaths: ['admin'],  
       pagesDirectory: __dirname + "\\pages",  
       targetDirectory : 'static/',
-      nextConfigPath: __dirname + "\\next.config.js"
+      nextConfigPath: __dirname + "\\next.config.js",
       ignoredExtensions: [
             'png',
             'jpg'

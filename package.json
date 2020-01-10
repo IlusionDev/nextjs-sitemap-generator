@@ -1,10 +1,9 @@
 {
   "name": "nextjs-sitemap-generator",
-  "version": "0.4.2",
+  "version": "0.5.0",
   "description": "Generate sitemap.xml from nextjs pages",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "keywords": [
     "nextjs",
     "sitemap.xml",
@@ -15,7 +14,22 @@
   "author": "Adrián Alonso Vergara",
   "license": "MIT",
   "dependencies": {
-    "date-fns": "^1.30.1"
+    "date-fns": "^2.9.0"
   },
-  "homepage": "https://github.com/IlusionDev/nextjs-sitemap-generator"
+  "homepage": "https://github.com/IlusionDev/nextjs-sitemap-generator",
+  "devDependencies": {
+    "@babel/core": "^7.7.7",
+    "@babel/preset-env": "^7.7.7",
+    "@types/jest": "^24.0.25",
+    "@types/node": "^13.1.6",
+    "@typescript-eslint/eslint-plugin": "^2.15.0",
+    "@typescript-eslint/parser": "^2.15.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "husky": "^4.0.6",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.3.0",
+    "typescript": "^3.7.4"
+  }
 }

@@ -1,20 +1,16 @@
-const fs = require("fs");
-const dateFns = require("date-fns");
-const path = require("path");
-
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+/* eslint-disable no-continue */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable global-require */
+const fs_1 = __importDefault(require("fs"));
+const date_fns_1 = __importDefault(require("date-fns"));
+const path_1 = __importDefault(require("path"));
 class SiteMapper {
-    constructor({
-        alternateUrls,
-        baseUrl,
-        ignoreIndexFiles,
-        ignoredPaths,
-        pagesDirectory,
-        sitemapPath,
-        targetDirectory,
-        nextConfigPath,
-        ignoredExtensions,
-        pagesConfig
-    }) {
+    constructor({ alternateUrls, baseUrl, ignoreIndexFiles, ignoredPaths, pagesDirectory, sitemapPath, targetDirectory, nextConfigPath, ignoredExtensions, pagesConfig, }) {
         this.pagesConfig = pagesConfig || {};
         this.alternatesUrls = alternateUrls || {};
         this.baseUrl = baseUrl;
@@ -28,150 +24,115 @@ class SiteMapper {
         this.sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 `;
-
         if (this.nextConfigPath) {
+            // eslint-disable-next-line import/no-dynamic-require
             this.nextConfig = require(nextConfigPath);
-
-            if (typeof this.nextConfig === "function") {
+            if (typeof this.nextConfig === 'function') {
                 this.nextConfig = this.nextConfig([], {});
             }
         }
     }
-
     preLaunch() {
-        fs.writeFileSync(
-            path.resolve(this.targetDirectory, "./sitemap.xml"),
-            this.sitemap,
-            {
-                flag: "w"
-            }
-        );
+        fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './sitemap.xml'), this.sitemap, {
+            flag: 'w',
+        });
     }
-
     finish() {
-        fs.writeFileSync(
-            path.resolve(this.targetDirectory, "./sitemap.xml"),
-            "</urlset>",
-            {
-                flag: "as"
-            }
-        );
+        fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './sitemap.xml'), '</urlset>', {
+            flag: 'as',
+        });
     }
-
     /**
      *
      */
     buildPathMap(dir) {
-        var pathMap = {};
-        const {exportTrailingSlash} = this.nextConfig || {};
-
-        let data = fs.readdirSync(dir);
-        for (let site of data) {
+        let pathMap = {};
+        const { exportTrailingSlash } = this.nextConfig || {};
+        const data = fs_1.default.readdirSync(dir);
+        for (const site of data) {
             // Filter directories
-            if (site[0] === "_" || site[0] === ".") continue;
+            if (site[0] === '_' || site[0] === '.')
+                continue;
             let toIgnore = false;
-            for (let path of this.ignoredPaths) {
-                if (site.includes(path)) toIgnore = true;
+            for (const ignoredPath of this.ignoredPaths) {
+                if (site.includes(ignoredPath))
+                    toIgnore = true;
             }
-            if (toIgnore) continue;
-
+            if (toIgnore)
+                continue;
             // Handle recursive paths
-            if (fs.lstatSync(dir + path.sep + site).isDirectory()) {
+            if (fs_1.default.lstatSync(dir + path_1.default.sep + site).isDirectory()) {
                 pathMap = {
                     ...pathMap,
-                    ...this.buildPathMap(dir + path.sep + site)
+                    ...this.buildPathMap(dir + path_1.default.sep + site),
                 };
-
                 continue;
             }
-
             // Is file
-            let fileExtension = site.split(".").pop();
-
-            //Ignoring file extension by user config
+            const fileExtension = site.split('.').pop();
             let toIgnoreExtension = false;
-
-            for (let extensionToIgnore of this.ignoredExtensions) {
-                if (extensionToIgnore === fileExtension) toIgnoreExtension = true;
+            for (const extensionToIgnore of this.ignoredExtensions) {
+                if (extensionToIgnore === fileExtension)
+                    toIgnoreExtension = true;
             }
-
-            if (toIgnoreExtension) continue;
-            //
-
-            let fileNameWithoutExtension = site.substring(
-                0,
-                site.length - (fileExtension.length + 1)
-            );
+            if (toIgnoreExtension)
+                continue;
+            let fileNameWithoutExtension = site.substring(0, site.length - (fileExtension.length + 1));
             fileNameWithoutExtension =
-                this.ignoreIndexFiles && fileNameWithoutExtension === "index"
-                    ? ""
+                this.ignoreIndexFiles && fileNameWithoutExtension === 'index'
+                    ? ''
                     : fileNameWithoutExtension;
-            let newDir = dir.replace(this.pagesdirectory, "").replace(/\\/g, "/");
-
-            if (this.ignoreIndexFiles && newDir === "/index") {
-                newDir = "";
+            let newDir = dir.replace(this.pagesdirectory, '').replace(/\\/g, '/');
+            if (this.ignoreIndexFiles && newDir === '/index') {
+                newDir = '';
             }
-
-            let pagePath = [newDir, fileNameWithoutExtension]
-                .filter(val => exportTrailingSlash || !!val)
-                .join("/");
+            const pagePath = [newDir, fileNameWithoutExtension]
+                .filter((val) => exportTrailingSlash || !!val)
+                .join('/');
             pathMap[pagePath] = {
-                page: pagePath
+                page: pagePath,
             };
         }
-
         return pathMap;
     }
-
     async sitemapMapper(dir) {
-        var pathMap = this.buildPathMap(dir);
+        let pathMap = this.buildPathMap(dir);
         const exportPathMap = this.nextConfig && this.nextConfig.exportPathMap;
-
         if (exportPathMap) {
             try {
                 pathMap = await exportPathMap(pathMap, {});
-            } catch (err) {
-                console.log(err);
             }
+            catch (err) { }
         }
-
         const paths = Object.keys(pathMap);
-        const date = dateFns.format(new Date(), "YYYY-MM-DD");
-
-        for (var i = 0, len = paths.length; i < len; i++) {
-            let pagePath = paths[i];
-            let alternates = "";
-            let priority = "";
-            let changefreq = "";
-
+        const date = date_fns_1.default.format(new Date(), 'YYYY-MM-DD');
+        for (let i = 0, len = paths.length; i < len; i++) {
+            const pagePath = paths[i];
+            let alternates = '';
+            let priority = '';
+            let changefreq = '';
             for (let langSite in this.alternatesUrls) {
                 alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${pagePath}" />`;
             }
-
             if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
-                let pageConfig = this.pagesConfig[pagePath];
+                const pageConfig = this.pagesConfig[pagePath];
                 priority = pageConfig.priority
                     ? `<priority>${pageConfig.priority}</priority>`
-                    : "";
+                    : '';
                 changefreq = pageConfig.changefreq
                     ? `<changefreq>${pageConfig.changefreq}</changefreq>`
-                    : "";
+                    : '';
             }
-
-            let xmlObject = `<url><loc>${this.baseUrl}${pagePath}</loc>
+            const xmlObject = `<url><loc>${this.baseUrl}${pagePath}</loc>
                 ${alternates}
                 ${priority}
                 ${changefreq}
                 <lastmod>${date}</lastmod>
                 </url>`;
-
-            fs.writeFileSync(
-                path.resolve(this.targetDirectory, "./sitemap.xml"),
-                xmlObject,
-                {flag: "as"}
-            );
+            fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './sitemap.xml'), xmlObject, {
+                flag: 'as',
+            });
         }
     }
 }
-
-module.exports = SiteMapper;
+exports.default = SiteMapper;

@@ -17,8 +17,8 @@ const config: Config = {
   },
   baseUrl: "https://example.com.ru",
   ignoredPaths: ["admin"],
-  pagesDirectory: path.resolve(rootPath + "\\example" + "\\pages__test"),
-  targetDirectory: path.resolve(rootPath + "\\example" + "\\static"),
+  pagesDirectory: path.resolve(rootPath , "example" , "pages__test"),
+  targetDirectory: path.resolve(rootPath , "example" , "static"),
   ignoreIndexFiles: true,
   ignoredExtensions: ["yml"]
 };

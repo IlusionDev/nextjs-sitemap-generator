@@ -3,7 +3,9 @@
   "version": "0.5.0",
   "description": "Generate sitemap.xml from nextjs pages",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "yarn jest && tsc"
+  },
   "keywords": [
     "nextjs",
     "sitemap.xml",
@@ -16,19 +18,28 @@
   "dependencies": {
     "date-fns": "^2.9.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn jest"
+    }
+  },
   "homepage": "https://github.com/IlusionDev/nextjs-sitemap-generator",
   "devDependencies": {
-    "@babel/core": "^7.7.7",
-    "@babel/preset-env": "^7.7.7",
     "@types/jest": "^24.0.25",
     "@types/node": "^13.1.6",
     "@typescript-eslint/eslint-plugin": "^2.15.0",
     "@typescript-eslint/parser": "^2.15.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.19.1",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-jest": "^23.4.0",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "husky": "^4.0.6",
     "jest": "^24.9.0",
+    "prettier": "^1.19.1",
     "ts-jest": "^24.3.0",
     "typescript": "^3.7.4"
   }

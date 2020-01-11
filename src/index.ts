@@ -1,15 +1,13 @@
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-unresolved */
-import Core from './core';
+import Core from './core'
 
-export default async function (config) {
+module.exports = async function (config) {
   if (!config) {
-    throw new Error('Config is mandatory');
+    throw new Error('Config is mandatory')
   }
 
-  const coreMapper = new Core(config);
+  const coreMapper = new Core(config)
 
-  coreMapper.preLaunch();
-  await coreMapper.sitemapMapper(config.pagesDirectory);
-  coreMapper.finish();
+  coreMapper.preLaunch()
+  await coreMapper.sitemapMapper(config.pagesDirectory)
+  coreMapper.finish()
 }

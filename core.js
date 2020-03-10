@@ -98,7 +98,7 @@ class SiteMapper {
             let newDir = dir.replace(this.pagesdirectory, '').replace(/\\/g, '/');
             if (newDir === '/index')
                 newDir = '';
-            const pagePath = this.mergePath(newDir, fileNameWithoutExtension);
+            const pagePath = newDir;
             pathMap[pagePath] = {
                 page: pagePath
             };

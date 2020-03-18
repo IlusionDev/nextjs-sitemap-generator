@@ -4,7 +4,7 @@
 You can make donations for the maintenance of the project.
 [Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YFXG8SLXPEVXN&source=url)
 
-Simple sitemap.xml mapper for NextJs proyects.
+Simple sitemap.xml mapper for NextJs project.
 ## Usage
 This module have been created to be used at node server side of NextJs.
 It is meant to be used in server.js so that when the server is initialized it will only run once.

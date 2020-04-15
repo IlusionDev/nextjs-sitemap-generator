@@ -169,7 +169,7 @@ class SiteMapper {
 
     for (let i = 0, len = paths.length; i < len; i++) {
       const pagePath = paths[i]
-      let outputPath = paths[i]
+      let outputPath = pagePath
       if (exportTrailingSlash) {
         outputPath += '/'
       }

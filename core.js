@@ -121,7 +121,7 @@ class SiteMapper {
         const date = date_fns_1.format(new Date(), 'yyyy-MM-dd');
         for (let i = 0, len = paths.length; i < len; i++) {
             const pagePath = paths[i];
-            let outputPath = paths[i];
+            let outputPath = pagePath;
             if (exportTrailingSlash) {
                 outputPath += '/';
             }

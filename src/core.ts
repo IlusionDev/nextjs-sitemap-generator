@@ -153,8 +153,9 @@ class SiteMapper {
 
   async sitemapMapper (dir) {
     let pathMap = this.buildPathMap(dir)
-    const exportPathMap = this.nextConfig && this.nextConfig.exportPathMap
+    const exportTrailingSlash = this.nextConfig && this.nextConfig.exportTrailingSlash
 
+    const exportPathMap = this.nextConfig && this.nextConfig.exportPathMap
     if (exportPathMap) {
       try {
         pathMap = await exportPathMap(pathMap, {})
@@ -168,12 +169,17 @@ class SiteMapper {
 
     for (let i = 0, len = paths.length; i < len; i++) {
       const pagePath = paths[i]
+      let outputPath = paths[i]
+      if (exportTrailingSlash) {
+        outputPath += '/'
+      }
+
       let alternates = ''
       let priority = ''
       let changefreq = ''
 
       for (const langSite in this.alternatesUrls) {
-        alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${pagePath}" />`
+        alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${outputPath}" />`
       }
 
       if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
@@ -186,7 +192,7 @@ class SiteMapper {
           : ''
       }
 
-      const xmlObject = `<url><loc>${this.baseUrl}${pagePath}</loc>
+      const xmlObject = `<url><loc>${this.baseUrl}${outputPath}</loc>
                 ${alternates}
                 ${priority}
                 ${changefreq}

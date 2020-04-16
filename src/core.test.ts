@@ -210,3 +210,148 @@ it("Should make map of sites", () => {
     }
   `);
 });
+
+describe("with nextConfig", () => {
+  function getCoreWithNextConfig(nextConfig) {
+    const core = new Core(config);
+
+    core.nextConfig = nextConfig;
+
+    return core;
+  }
+
+  it("should call exportPathMap from Next config", async () => {
+    const core = getCoreWithNextConfig({
+      async exportPathMap(defaultMap) {
+        return {
+          "/exportPathMapURL": { page: "/" }
+        };
+      }
+    });
+
+    const urls = await core.getSitemapURLs(config.pagesDirectory);
+
+    expect(urls).toEqual([
+      {
+        "changefreq": "",
+        "outputPath": "/exportPathMapURL",
+        "pagePath": "/exportPathMapURL",
+        "priority": ""
+      }
+    ]);
+  });
+
+  it("should respect exportTrailingSlash from Next config", async () => {
+    const core = getCoreWithNextConfig({
+      exportTrailingSlash: true
+    });
+
+    const urls = await core.getSitemapURLs(config.pagesDirectory);
+
+    const outputPaths = urls.map(url => url.outputPath);
+    expect(outputPaths.every(outputPath => outputPath.endsWith("/")));
+
+    expect(urls).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "changefreq": "",
+          "outputPath": "/index.old/",
+          "pagePath": "/index.old",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/",
+          "pagePath": "",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/login/",
+          "pagePath": "/login",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/product-discount/",
+          "pagePath": "/product-discount",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/set-user/",
+          "pagePath": "/set-user",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/store/page1/",
+          "pagePath": "/store/page1",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/store/page2/",
+          "pagePath": "/store/page2",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/store/product/page1/",
+          "pagePath": "/store/product/page1",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/store/product/page2/",
+          "pagePath": "/store/product/page2",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/user/page1/",
+          "pagePath": "/user/page1",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/user/page2/",
+          "pagePath": "/user/page2",
+          "priority": "",
+        },
+      ]
+    `);
+  });
+
+  it("should generate valid sitemap", async () => {
+    const core = getCoreWithNextConfig({
+      async exportPathMap(defaultMap) {
+        return {
+          "/exportPathMapURL": { page: "/" }
+        };
+      },
+      exportTrailingSlash: true
+    });
+
+    core.preLaunch();
+    await core.sitemapMapper(config.pagesDirectory);
+    core.finish();
+
+    const date = format(new Date(), "yyyy-MM-dd");
+    const sitemap = fs.readFileSync(
+      path.resolve(config.targetDirectory, "./sitemap.xml"),
+      { encoding: "UTF-8" }
+    );
+
+    expect(sitemap).toMatchInlineSnapshot(`
+      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+      <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
+      <url><loc>https://example.com.ru/exportPathMapURL/</loc>
+                      <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/exportPathMapURL/\\" />
+                      
+                      
+                      <lastmod>2020-04-16</lastmod>
+                      </url></urlset>"
+    `);
+  });
+});

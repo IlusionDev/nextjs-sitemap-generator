@@ -148,7 +148,7 @@ class SiteMapper {
     return pathMap
   }
 
-  async sitemapMapper (dir) {
+  async getSitemapURLs(dir) {
     let pathMap = this.buildPathMap(dir)
     const exportTrailingSlash = this.nextConfig && this.nextConfig.exportTrailingSlash
 
@@ -162,39 +162,55 @@ class SiteMapper {
     }
 
     const paths = Object.keys(pathMap)
-    const date = format(new Date(), 'yyyy-MM-dd')
 
-    for (let i = 0, len = paths.length; i < len; i++) {
-      const pagePath = paths[i]
-
-      if (this.isIgnoredPath(pagePath)) {
-        continue
-      }
-
+    return paths.map(pagePath => {
       let outputPath = pagePath
       if (exportTrailingSlash) {
         outputPath += '/'
       }
 
+      let priority = ''
+      let changefreq = ''
+
+      if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
+        const pageConfig = this.pagesConfig[pagePath]
+        priority = pageConfig.priority
+        changefreq = pageConfig.changefreq
+      }
+
+      return {
+        pagePath,
+        outputPath,
+        priority,
+        changefreq,
+      }
+    });
+  }
+
+  async sitemapMapper(dir) {
+    const urls = await this.getSitemapURLs(dir)
+
+    const filteredURLs = urls.filter(url => !this.isIgnoredPath(url.pagePath))
+
+    const date = format(new Date(), 'yyyy-MM-dd')
+
+    filteredURLs.forEach((url) => {
       let alternates = ''
       let priority = ''
       let changefreq = ''
 
       for (const langSite in this.alternatesUrls) {
-        alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${outputPath}" />`
+        alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${url.outputPath}" />`
       }
 
-      if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
-        const pageConfig = this.pagesConfig[pagePath]
-        priority = pageConfig.priority
-          ? `<priority>${pageConfig.priority}</priority>`
-          : ''
-        changefreq = pageConfig.changefreq
-          ? `<changefreq>${pageConfig.changefreq}</changefreq>`
-          : ''
+      if (url.priority) {
+        priority = `<priority>${url.priority}</priority>`
+      }
+      if (url.changefreq) {
+        changefreq = `<changefreq>${url.changefreq}</changefreq>`
       }
 
-      const xmlObject = `<url><loc>${this.baseUrl}${outputPath}</loc>
+      const xmlObject = `<url><loc>${this.baseUrl}${url.outputPath}</loc>
                 ${alternates}
                 ${priority}
                 ${changefreq}
@@ -204,7 +220,7 @@ class SiteMapper {
       fs.writeFileSync(path.resolve(this.targetDirectory, './sitemap.xml'), xmlObject, {
         flag: 'as'
       })
-    }
+    })
   }
 }
 

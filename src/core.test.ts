@@ -372,6 +372,7 @@ describe("with nextConfig", () => {
     const core = getCoreWithNextConfig({
       async exportPathMap(defaultMap) {
         return {
+          "/admin/": { page: "/" }, // should be filtered out by ignoredPaths
           "/exportPathMapURL": { page: "/" }
         };
       },

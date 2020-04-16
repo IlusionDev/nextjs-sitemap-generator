@@ -322,4 +322,36 @@ describe("with nextConfig", () => {
       ]
     `);
   });
+
+  it("should generate valid sitemap", async () => {
+    const core = getCoreWithNextConfig({
+      async exportPathMap(defaultMap) {
+        return {
+          "/exportPathMapURL": { page: "/" }
+        };
+      },
+      exportTrailingSlash: true
+    });
+
+    core.preLaunch();
+    await core.sitemapMapper(config.pagesDirectory);
+    core.finish();
+
+    const date = format(new Date(), "yyyy-MM-dd");
+    const sitemap = fs.readFileSync(
+      path.resolve(config.targetDirectory, "./sitemap.xml"),
+      { encoding: "UTF-8" }
+    );
+
+    expect(sitemap).toMatchInlineSnapshot(`
+      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+      <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
+      <url><loc>https://example.com.ru/exportPathMapURL/</loc>
+                      <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/exportPathMapURL/\\" />
+                      
+                      
+                      <lastmod>2020-04-16</lastmod>
+                      </url></urlset>"
+    `);
+  });
 });

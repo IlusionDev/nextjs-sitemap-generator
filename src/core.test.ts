@@ -210,3 +210,113 @@ it("Should make map of sites", () => {
     }
   `);
 });
+
+describe("with nextConfig", () => {
+  function getCoreWithNextConfig(nextConfig) {
+    const core = new Core(config);
+
+    core.nextConfig = nextConfig;
+
+    return core;
+  }
+
+  it("should call exportPathMap from Next config", async () => {
+    const core = getCoreWithNextConfig({
+      async exportPathMap(defaultMap) {
+        return {
+          ...defaultMap,
+          "/exportPathMapURL": { page: "/" }
+        };
+      }
+    });
+
+    const urls = await core.getSitemapURLs(config.pagesDirectory);
+
+    const exportPathMapURL = urls.find(url => url.pagePath === '/exportPathMapURL');
+
+    expect(exportPathMapURL).toBeDefined();
+    expect(exportPathMapURL.outputPath).toEqual('/exportPathMapURL');
+  });
+
+  it("should respect exportTrailingSlash from Next config", async () => {
+    const core = getCoreWithNextConfig({
+      exportTrailingSlash: true
+    });
+
+    const urls = await core.getSitemapURLs(config.pagesDirectory);
+
+    const outputPaths = urls.map(url => url.outputPath);
+    expect(outputPaths.every(outputPath => outputPath.endsWith('/')));
+
+    expect(urls).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "changefreq": "",
+          "outputPath": "/index.old/",
+          "pagePath": "/index.old",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/",
+          "pagePath": "",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/login/",
+          "pagePath": "/login",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/product-discount/",
+          "pagePath": "/product-discount",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/set-user/",
+          "pagePath": "/set-user",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/store/page1/",
+          "pagePath": "/store/page1",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/store/page2/",
+          "pagePath": "/store/page2",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/store/product/page1/",
+          "pagePath": "/store/product/page1",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/store/product/page2/",
+          "pagePath": "/store/product/page2",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/user/page1/",
+          "pagePath": "/user/page1",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/user/page2/",
+          "pagePath": "/user/page2",
+          "priority": "",
+        },
+      ]
+    `);
+  });
+});

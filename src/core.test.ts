@@ -177,6 +177,21 @@ it("Should make map of sites", () => {
       "": Object {
         "page": "",
       },
+      "/admin/page1": Object {
+        "page": "/admin/page1",
+      },
+      "/admin/page2": Object {
+        "page": "/admin/page2",
+      },
+      "/admin/page3": Object {
+        "page": "/admin/page3",
+      },
+      "/admin/superadmins/page1": Object {
+        "page": "/admin/superadmins/page1",
+      },
+      "/admin/superadmins/page2": Object {
+        "page": "/admin/superadmins/page2",
+      },
       "/index.old": Object {
         "page": "/index.old",
       },
@@ -253,6 +268,36 @@ describe("with nextConfig", () => {
 
     expect(urls).toMatchInlineSnapshot(`
       Array [
+        Object {
+          "changefreq": "",
+          "outputPath": "/admin/page1/",
+          "pagePath": "/admin/page1",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/admin/page2/",
+          "pagePath": "/admin/page2",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/admin/page3/",
+          "pagePath": "/admin/page3",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/admin/superadmins/page1/",
+          "pagePath": "/admin/superadmins/page1",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/admin/superadmins/page2/",
+          "pagePath": "/admin/superadmins/page2",
+          "priority": "",
+        },
         Object {
           "changefreq": "",
           "outputPath": "/index.old/",

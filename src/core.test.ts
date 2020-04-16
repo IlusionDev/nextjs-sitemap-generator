@@ -224,7 +224,6 @@ describe("with nextConfig", () => {
     const core = getCoreWithNextConfig({
       async exportPathMap(defaultMap) {
         return {
-          ...defaultMap,
           "/exportPathMapURL": { page: "/" }
         };
       }
@@ -232,10 +231,14 @@ describe("with nextConfig", () => {
 
     const urls = await core.getSitemapURLs(config.pagesDirectory);
 
-    const exportPathMapURL = urls.find(url => url.pagePath === '/exportPathMapURL');
-
-    expect(exportPathMapURL).toBeDefined();
-    expect(exportPathMapURL.outputPath).toEqual('/exportPathMapURL');
+    expect(urls).toEqual([
+      {
+        "changefreq": "",
+        "outputPath": "/exportPathMapURL",
+        "pagePath": "/exportPathMapURL",
+        "priority": ""
+      }
+    ]);
   });
 
   it("should respect exportTrailingSlash from Next config", async () => {

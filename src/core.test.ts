@@ -249,7 +249,7 @@ describe("with nextConfig", () => {
     const urls = await core.getSitemapURLs(config.pagesDirectory);
 
     const outputPaths = urls.map(url => url.outputPath);
-    expect(outputPaths.every(outputPath => outputPath.endsWith('/')));
+    expect(outputPaths.every(outputPath => outputPath.endsWith("/")));
 
     expect(urls).toMatchInlineSnapshot(`
       Array [

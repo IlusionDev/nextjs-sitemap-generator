@@ -75,13 +75,9 @@ class SiteMapper {
         let pathMap = {};
         const data = fs_1.default.readdirSync(dir);
         for (const site of data) {
-            // Filter directories
             if (this.isReservedPage(site))
                 continue;
-            let toIgnore = false;
-            toIgnore = this.isIgnoredPath(site);
-            if (toIgnore)
-                continue;
+            // Filter directories
             const nextPath = dir + path_1.default.sep + site;
             if (fs_1.default.lstatSync(nextPath).isDirectory()) {
                 pathMap = {
@@ -121,6 +117,9 @@ class SiteMapper {
         const date = date_fns_1.format(new Date(), 'yyyy-MM-dd');
         for (let i = 0, len = paths.length; i < len; i++) {
             const pagePath = paths[i];
+            if (this.isIgnoredPath(pagePath)) {
+                continue;
+            }
             let outputPath = pagePath;
             if (exportTrailingSlash) {
                 outputPath += '/';

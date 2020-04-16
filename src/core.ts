@@ -116,13 +116,10 @@ class SiteMapper {
     const data = fs.readdirSync(dir)
 
     for (const site of data) {
-      // Filter directories
       if (this.isReservedPage(site)) continue
-      let toIgnore: boolean = false
-      toIgnore = this.isIgnoredPath(site)
-      if (toIgnore) continue
-      const nextPath: string = dir + path.sep + site
 
+      // Filter directories
+      const nextPath: string = dir + path.sep + site
       if (fs.lstatSync(nextPath).isDirectory()) {
         pathMap = {
           ...pathMap,
@@ -169,6 +166,11 @@ class SiteMapper {
 
     for (let i = 0, len = paths.length; i < len; i++) {
       const pagePath = paths[i]
+
+      if (this.isIgnoredPath(pagePath)) {
+        continue
+      }
+
       let outputPath = pagePath
       if (exportTrailingSlash) {
         outputPath += '/'

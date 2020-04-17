@@ -4,7 +4,7 @@ import Core from "./core";
 import Config from "./InterfaceConfig";
 import path from "path";
 import fs from "fs";
-import { format } from 'date-fns'
+import { format } from "date-fns";
 
 const rootPath = path.resolve("./");
 
@@ -17,10 +17,20 @@ const config: Config = {
   },
   baseUrl: "https://example.com.ru",
   ignoredPaths: ["admin"],
-  pagesDirectory: path.resolve(rootPath , "example" , "pages__test"),
-  targetDirectory: path.resolve(rootPath , "example" , "static"),
+  pagesDirectory: path.resolve(rootPath, "example", "pages__test"),
+  targetDirectory: path.resolve(rootPath, "example", "static"),
   ignoreIndexFiles: true,
-  ignoredExtensions: ["yml"]
+  ignoredExtensions: ["yml"],
+  sitemapStylesheet: [
+    {
+      type: "text/css",
+      styleFile: "/test/styles.css"
+    },
+    {
+      type: "text/xsl",
+      styleFile: "test/test/styles.xls"
+    }
+  ]
 };
 const coreMapper = new Core(config);
 
@@ -101,15 +111,21 @@ it("Should generate valid sitemap.xml", async () => {
   coreMapper.preLaunch();
   await coreMapper.sitemapMapper(config.pagesDirectory);
   coreMapper.finish();
-  const date = format(new Date(), 'yyyy-MM-dd')
+  const date = format(new Date(), "yyyy-MM-dd");
   const sitemap = fs.readFileSync(
     path.resolve(config.targetDirectory, "./sitemap.xml"),
     { encoding: "UTF-8" }
   );
-
+  expect(sitemap.includes('xml-stylesheet'))
   expect(sitemap).toMatchInlineSnapshot(`
     "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
-    <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
+          <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
+          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" 
+          xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" 
+          xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" 
+          xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
+          <?xml-stylesheet type=\\"text/css\\" href=\\"/test/styles.css\\"?>
+    <?xml-stylesheet type=\\"text/xsl\\" href=\\"test/test/styles.xls\\"?>
     <url><loc>https://example.com.ru/index.old</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/index.old\\" />
                     
@@ -168,6 +184,19 @@ it("Should generate valid sitemap.xml", async () => {
                     </url></urlset>"
   `);
 });
+
+it("Should generate styles xml links", async () => {
+  coreMapper.preLaunch();
+  await coreMapper.sitemapMapper(config.pagesDirectory);
+  coreMapper.finish();
+  const sitemap = fs.readFileSync(
+    path.resolve(config.targetDirectory, "./sitemap.xml"),
+    { encoding: "UTF-8" }
+  );
+
+  expect(sitemap.includes("<?xml-stylesheet type=\"text/xsl\" href=\"test/test/styles.xls\"?>")).toBe(true);
+  expect(sitemap.includes("<?xml-stylesheet type=\"text/css\" href=\"/test/styles.css\"?>")).toBe(true);
+})
 
 it("Should make map of sites", () => {
   const result = coreMapper.buildPathMap(config.pagesDirectory);

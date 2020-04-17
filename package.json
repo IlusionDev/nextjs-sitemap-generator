@@ -1,6 +1,6 @@
 {
   "name": "nextjs-sitemap-generator",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Generate sitemap.xml from nextjs pages",
   "main": "index.js",
   "scripts": {

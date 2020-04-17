@@ -426,7 +426,6 @@ describe("with nextConfig", () => {
     await core.sitemapMapper(config.pagesDirectory);
     core.finish();
 
-    const date = format(new Date(), "yyyy-MM-dd");
     const sitemap = fs.readFileSync(
       path.resolve(config.targetDirectory, "./sitemap.xml"),
       { encoding: "UTF-8" }

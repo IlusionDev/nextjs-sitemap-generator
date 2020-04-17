@@ -41,7 +41,17 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
           priority: '0.5',
           changefreq: 'daily'
         }
-      }
+      },
+      sitemapStylesheet: [
+        {
+          type: "text/css",
+          styleFile: "/test/styles.css"
+        },
+        {
+          type: "text/xsl",
+          styleFile: "test/test/styles.xls"
+        }
+      ]
     });
 
 ## OPTIONS description
@@ -54,6 +64,7 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
  - **pagesDirectory**:  The directory where Nextjs pages live. You can use another directory while they are nextjs pages. **It must to be an absolute path**.
  - **targetDirectory**:  The directory where sitemap.xml going to be written.
  - **pagesConfig**:  Object configuration of priority and changefreq per route.(OPTIONAL)
+ - **sitemapStylesheet**:  Array of style objects that will be applied to sitemap.(OPTIONAL)
  - **nextConfigPath**(Used for dynamic routes):  Calls `exportPathMap` if exported from `nextConfigPath` js file.
   See this to understand how to do it (https://github.com/zeit/next.js/blob/canary/examples/with-static-export/next.config.js) (OPTIONAL)
 

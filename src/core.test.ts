@@ -35,12 +35,12 @@ const config: Config = {
 const coreMapper = new Core(config);
 
 beforeEach(() => {
-  MockDate.set('2020-01-01T12:00:00Z');
+  MockDate.set("2020-01-01T12:00:00Z");
 });
 
 afterAll(() => {
   MockDate.reset();
-})
+});
 
 it("Should detect reserved sites", () => {
   const underscoredSite = coreMapper.isReservedPage("_admin");
@@ -123,7 +123,7 @@ it("Should generate valid sitemap.xml", async () => {
     path.resolve(config.targetDirectory, "./sitemap.xml"),
     { encoding: "UTF-8" }
   );
-  expect(sitemap.includes('xml-stylesheet'))
+  expect(sitemap.includes("xml-stylesheet"));
   expect(sitemap).toMatchInlineSnapshot(`
     "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
           <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
@@ -201,9 +201,17 @@ it("Should generate styles xml links", async () => {
     { encoding: "UTF-8" }
   );
 
-  expect(sitemap.includes("<?xml-stylesheet type=\"text/xsl\" href=\"test/test/styles.xls\"?>")).toBe(true);
-  expect(sitemap.includes("<?xml-stylesheet type=\"text/css\" href=\"/test/styles.css\"?>")).toBe(true);
-})
+  expect(
+    sitemap.includes(
+      '<?xml-stylesheet type="text/xsl" href="test/test/styles.xls"?>'
+    )
+  ).toBe(true);
+  expect(
+    sitemap.includes(
+      '<?xml-stylesheet type="text/css" href="/test/styles.css"?>'
+    )
+  ).toBe(true);
+});
 
 it("Should make map of sites", () => {
   const result = coreMapper.buildPathMap(config.pagesDirectory);
@@ -269,10 +277,10 @@ describe("with nextConfig", () => {
 
     expect(urls).toEqual([
       {
-        "changefreq": "",
-        "outputPath": "/exportPathMapURL",
-        "pagePath": "/exportPathMapURL",
-        "priority": ""
+        changefreq: "",
+        outputPath: "/exportPathMapURL",
+        pagePath: "/exportPathMapURL",
+        priority: ""
       }
     ]);
   });
@@ -380,7 +388,13 @@ describe("with nextConfig", () => {
 
     expect(sitemap).toMatchInlineSnapshot(`
       "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
-      <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
+            <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" 
+            xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" 
+            xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" 
+            xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
+            <?xml-stylesheet type=\\"text/css\\" href=\\"/test/styles.css\\"?>
+      <?xml-stylesheet type=\\"text/xsl\\" href=\\"test/test/styles.xls\\"?>
       <url><loc>https://example.com.ru/exportPathMapURL/</loc>
                       <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/exportPathMapURL/\\" />
                       

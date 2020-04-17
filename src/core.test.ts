@@ -106,6 +106,22 @@ it("Should generate sitemap.xml", async () => {
   expect(sitemap.size).toBeGreaterThan(0);
 });
 
+it("should add extraPaths to output", async () => {
+  const core = new Core({
+    ...config,
+    extraPaths: ['/extraPath'],
+  });
+
+  const urls = await core.getSitemapURLs(config.pagesDirectory);
+
+  expect(urls).toContainEqual({
+    pagePath: '/extraPath',
+    outputPath: '/extraPath',
+    priority: '',
+    changefreq: '',
+  });
+});
+
 it("Should generate valid sitemap.xml", async () => {
   coreMapper.preLaunch();
   await coreMapper.sitemapMapper(config.pagesDirectory);

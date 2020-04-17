@@ -13,6 +13,8 @@ class SiteMapper {
 
   ignoredPaths?: Array<string>;
 
+  extraPaths?: Array<string>;
+
   ignoreIndexFiles?: Array<string> | boolean;
 
   ignoredExtensions?: Array<string>;
@@ -32,6 +34,7 @@ class SiteMapper {
   constructor ({
     alternateUrls,
     baseUrl,
+    extraPaths,
     ignoreIndexFiles,
     ignoredPaths,
     pagesDirectory,
@@ -44,6 +47,7 @@ class SiteMapper {
     this.alternatesUrls = alternateUrls || {}
     this.baseUrl = baseUrl
     this.ignoredPaths = ignoredPaths || []
+    this.extraPaths = extraPaths || []
     this.ignoreIndexFiles = ignoreIndexFiles || false
     this.ignoredExtensions = ignoredExtensions || []
     this.pagesdirectory = pagesDirectory
@@ -161,7 +165,7 @@ class SiteMapper {
       }
     }
 
-    const paths = Object.keys(pathMap)
+    const paths = Object.keys(pathMap).concat(this.extraPaths)
 
     return paths.map(pagePath => {
       let outputPath = pagePath

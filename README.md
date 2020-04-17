@@ -78,6 +78,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/illiteratewriter"><img src="https://avatars1.githubusercontent.com/u/5787110?v=4" width="100px;" alt="illiteratewriter"/><br /><sub><b>illiteratewriter</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=illiteratewriter" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/goran-zdjelar"><img src="https://avatars2.githubusercontent.com/u/45183713?v=4" width="100px;" alt="Goran Zdjelar"/><br /><sub><b>Goran Zdjelar</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=goran-zdjelar" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/jlaramie"><img src="https://avatars0.githubusercontent.com/u/755748?v=4" width="100px;" alt="jlaramie"/><br /><sub><b>jlaramie</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=jlaramie" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/gavinsharp"><img src="https://avatars3.githubusercontent.com/u/327839?s=400&v=4" width="100px;" alt="gavinsharp"/><br /><sub><b>Gavin Sharp
+</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=gavinsharp" title="Code">💻</a></td>
   </tr>
 </table>
 

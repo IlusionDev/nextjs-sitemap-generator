@@ -5,6 +5,7 @@ import Config from "./InterfaceConfig";
 import path from "path";
 import fs from "fs";
 import { format } from 'date-fns'
+import MockDate from "mockdate";
 
 const rootPath = path.resolve("./");
 
@@ -23,6 +24,14 @@ const config: Config = {
   ignoredExtensions: ["yml"]
 };
 const coreMapper = new Core(config);
+
+beforeEach(() => {
+  MockDate.set('2020-01-01T12:00:00Z');
+});
+
+afterAll(() => {
+  MockDate.reset();
+})
 
 it("Should detect reserved sites", () => {
   const underscoredSite = coreMapper.isReservedPage("_admin");
@@ -101,7 +110,6 @@ it("Should generate valid sitemap.xml", async () => {
   coreMapper.preLaunch();
   await coreMapper.sitemapMapper(config.pagesDirectory);
   coreMapper.finish();
-  const date = format(new Date(), 'yyyy-MM-dd')
   const sitemap = fs.readFileSync(
     path.resolve(config.targetDirectory, "./sitemap.xml"),
     { encoding: "UTF-8" }
@@ -114,57 +122,57 @@ it("Should generate valid sitemap.xml", async () => {
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/index.old\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url><url><loc>https://example.com.ru</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url><url><loc>https://example.com.ru/login</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/login\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/login\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/login\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/login\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url><url><loc>https://example.com.ru/product-discount</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/product-discount\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/product-discount\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/product-discount\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/product-discount\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url><url><loc>https://example.com.ru/set-user</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/set-user\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/set-user\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/set-user\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/set-user\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url><url><loc>https://example.com.ru/store/page1</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/page1\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url><url><loc>https://example.com.ru/store/page2</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/page2\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url><url><loc>https://example.com.ru/store/product/page1</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/product/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/product/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/product/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/product/page1\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url><url><loc>https://example.com.ru/store/product/page2</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/product/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/product/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/product/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/product/page2\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url><url><loc>https://example.com.ru/user/page1</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/user/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/user/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/user/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/user/page1\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url><url><loc>https://example.com.ru/user/page2</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/user/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/user/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/user/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/user/page2\\" />
                     
                     
-                    <lastmod>${date}</lastmod>
+                    <lastmod>2020-01-01</lastmod>
                     </url></urlset>"
   `);
 });
@@ -396,7 +404,7 @@ describe("with nextConfig", () => {
                       <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/exportPathMapURL/\\" />
                       
                       
-                      <lastmod>2020-04-16</lastmod>
+                      <lastmod>2020-01-01</lastmod>
                       </url></urlset>"
     `);
   });

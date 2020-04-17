@@ -376,11 +376,37 @@ describe("with nextConfig", () => {
     `);
   });
 
+  it("should exclude ignoredPaths returned by exportPathMap", async () => {
+    const core = getCoreWithNextConfig({
+      async exportPathMap(defaultMap) {
+        return {
+          "/admin/": { page: "/" } // should be filtered out by ignoredPaths
+        };
+      },
+      exportTrailingSlash: true
+    });
+
+    core.preLaunch();
+    await core.sitemapMapper(config.pagesDirectory);
+    core.finish();
+
+    const date = format(new Date(), "yyyy-MM-dd");
+    const sitemap = fs.readFileSync(
+      path.resolve(config.targetDirectory, "./sitemap.xml"),
+      { encoding: "UTF-8" }
+    );
+
+    expect(sitemap).toMatchInlineSnapshot(`
+      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+      <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
+      </urlset>"
+    `);
+  });
+
   it("should generate valid sitemap", async () => {
     const core = getCoreWithNextConfig({
       async exportPathMap(defaultMap) {
         return {
-          "/admin/": { page: "/" }, // should be filtered out by ignoredPaths
           "/exportPathMapURL": { page: "/" }
         };
       },

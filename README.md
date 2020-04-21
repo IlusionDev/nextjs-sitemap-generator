@@ -42,7 +42,17 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
           priority: '0.5',
           changefreq: 'daily'
         }
-      }
+      },
+      sitemapStylesheet: [
+        {
+          type: "text/css",
+          styleFile: "/test/styles.css"
+        },
+        {
+          type: "text/xsl",
+          styleFile: "test/test/styles.xls"
+        }
+      ]
     });
 
 ## OPTIONS description
@@ -56,6 +66,7 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
  - **pagesDirectory**:  The directory where Nextjs pages live. You can use another directory while they are nextjs pages. **It must to be an absolute path**.
  - **targetDirectory**:  The directory where sitemap.xml going to be written.
  - **pagesConfig**:  Object configuration of priority and changefreq per route.(OPTIONAL)
+ - **sitemapStylesheet**:  Array of style objects that will be applied to sitemap.(OPTIONAL)
  - **nextConfigPath**(Used for dynamic routes):  Calls `exportPathMap` if exported from `nextConfigPath` js file.
   See this to understand how to do it (https://github.com/zeit/next.js/blob/canary/examples/with-static-export/next.config.js) (OPTIONAL)
 
@@ -80,6 +91,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/illiteratewriter"><img src="https://avatars1.githubusercontent.com/u/5787110?v=4" width="100px;" alt="illiteratewriter"/><br /><sub><b>illiteratewriter</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=illiteratewriter" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/goran-zdjelar"><img src="https://avatars2.githubusercontent.com/u/45183713?v=4" width="100px;" alt="Goran Zdjelar"/><br /><sub><b>Goran Zdjelar</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=goran-zdjelar" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/jlaramie"><img src="https://avatars0.githubusercontent.com/u/755748?v=4" width="100px;" alt="jlaramie"/><br /><sub><b>jlaramie</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=jlaramie" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/gavinsharp"><img src="https://avatars3.githubusercontent.com/u/327839?s=400&v=4" width="100px;" alt="gavinsharp"/><br /><sub><b>Gavin Sharp
+</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=gavinsharp" title="Code">💻</a></td>
   </tr>
 </table>
 

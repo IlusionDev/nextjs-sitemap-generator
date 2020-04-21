@@ -1,3 +1,7 @@
+export interface SitemapStyleFile {
+  type: string;
+  styleFile: string;
+}
 export default interface Config {
   alternateUrls?: object;
   baseUrl: string;
@@ -9,4 +13,5 @@ export default interface Config {
   nextConfigPath?: string;
   targetDirectory: string;
   pagesConfig?: object;
+  sitemapStylesheet?: Array<SitemapStyleFile>
 };

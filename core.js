@@ -7,7 +7,7 @@ const fs_1 = __importDefault(require("fs"));
 const date_fns_1 = require("date-fns");
 const path_1 = __importDefault(require("path"));
 class SiteMapper {
-    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, nextConfigPath, ignoredExtensions, pagesConfig }) {
+    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet }) {
         this.pagesConfig = pagesConfig || {};
         this.alternatesUrls = alternateUrls || {};
         this.baseUrl = baseUrl;
@@ -18,9 +18,14 @@ class SiteMapper {
         this.pagesdirectory = pagesDirectory;
         this.targetDirectory = targetDirectory;
         this.nextConfigPath = nextConfigPath;
+        this.sitemapStylesheet = sitemapStylesheet || [];
         this.sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-`;
+      <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
+      http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+      xmlns:xhtml="http://www.w3.org/1999/xhtml">
+      `;
         if (this.nextConfigPath) {
             this.nextConfig = require(nextConfigPath);
             if (typeof this.nextConfig === 'function') {
@@ -29,7 +34,11 @@ class SiteMapper {
         }
     }
     preLaunch() {
-        fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './sitemap.xml'), this.sitemap, {
+        let xmlStyle = '';
+        if (this.sitemapStylesheet) {
+            this.sitemapStylesheet.forEach(({ type, styleFile }) => { xmlStyle += `<?xml-stylesheet type="${type}" href="${styleFile}"?>\n`; });
+        }
+        fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './sitemap.xml'), this.sitemap + xmlStyle, {
             flag: 'w'
         });
     }

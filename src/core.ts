@@ -129,13 +129,10 @@ class SiteMapper {
     const data = fs.readdirSync(dir)
 
     for (const site of data) {
-      // Filter directories
       if (this.isReservedPage(site)) continue
-      let toIgnore: boolean = false
-      toIgnore = this.isIgnoredPath(site)
-      if (toIgnore) continue
-      const nextPath: string = dir + path.sep + site
 
+      // Filter directories
+      const nextPath: string = dir + path.sep + site
       if (fs.lstatSync(nextPath).isDirectory()) {
         pathMap = {
           ...pathMap,
@@ -206,9 +203,11 @@ class SiteMapper {
   async sitemapMapper(dir) {
     const urls = await this.getSitemapURLs(dir)
 
+    const filteredURLs = urls.filter(url => !this.isIgnoredPath(url.pagePath))
+
     const date = format(new Date(), 'yyyy-MM-dd')
 
-    urls.forEach((url) => {
+    filteredURLs.forEach((url) => {
       let alternates = ''
       let priority = ''
       let changefreq = ''

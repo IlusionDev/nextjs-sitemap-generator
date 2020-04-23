@@ -84,13 +84,9 @@ class SiteMapper {
         let pathMap = {};
         const data = fs_1.default.readdirSync(dir);
         for (const site of data) {
-            // Filter directories
             if (this.isReservedPage(site))
                 continue;
-            let toIgnore = false;
-            toIgnore = this.isIgnoredPath(site);
-            if (toIgnore)
-                continue;
+            // Filter directories
             const nextPath = dir + path_1.default.sep + site;
             if (fs_1.default.lstatSync(nextPath).isDirectory()) {
                 pathMap = {
@@ -149,8 +145,9 @@ class SiteMapper {
     }
     async sitemapMapper(dir) {
         const urls = await this.getSitemapURLs(dir);
+        const filteredURLs = urls.filter(url => !this.isIgnoredPath(url.pagePath));
         const date = date_fns_1.format(new Date(), 'yyyy-MM-dd');
-        urls.forEach((url) => {
+        filteredURLs.forEach((url) => {
             let alternates = '';
             let priority = '';
             let changefreq = '';

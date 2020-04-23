@@ -221,6 +221,21 @@ it("Should make map of sites", () => {
       "": Object {
         "page": "",
       },
+      "/admin/page1": Object {
+        "page": "/admin/page1",
+      },
+      "/admin/page2": Object {
+        "page": "/admin/page2",
+      },
+      "/admin/page3": Object {
+        "page": "/admin/page3",
+      },
+      "/admin/superadmins/page1": Object {
+        "page": "/admin/superadmins/page1",
+      },
+      "/admin/superadmins/page2": Object {
+        "page": "/admin/superadmins/page2",
+      },
       "/index.old": Object {
         "page": "/index.old",
       },
@@ -299,6 +314,36 @@ describe("with nextConfig", () => {
       Array [
         Object {
           "changefreq": "",
+          "outputPath": "/admin/page1/",
+          "pagePath": "/admin/page1",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/admin/page2/",
+          "pagePath": "/admin/page2",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/admin/page3/",
+          "pagePath": "/admin/page3",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/admin/superadmins/page1/",
+          "pagePath": "/admin/superadmins/page1",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
+          "outputPath": "/admin/superadmins/page2/",
+          "pagePath": "/admin/superadmins/page2",
+          "priority": "",
+        },
+        Object {
+          "changefreq": "",
           "outputPath": "/index.old/",
           "pagePath": "/index.old",
           "priority": "",
@@ -364,6 +409,38 @@ describe("with nextConfig", () => {
           "priority": "",
         },
       ]
+    `);
+  });
+
+  it("should exclude ignoredPaths returned by exportPathMap", async () => {
+    const core = getCoreWithNextConfig({
+      async exportPathMap(defaultMap) {
+        return {
+          "/admin/": { page: "/" } // should be filtered out by ignoredPaths
+        };
+      },
+      exportTrailingSlash: true
+    });
+
+    core.preLaunch();
+    await core.sitemapMapper(config.pagesDirectory);
+    core.finish();
+
+    const sitemap = fs.readFileSync(
+      path.resolve(config.targetDirectory, "./sitemap.xml"),
+      { encoding: "UTF-8" }
+    );
+
+    expect(sitemap).toMatchInlineSnapshot(`
+      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+            <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" 
+            xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" 
+            xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" 
+            xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
+            <?xml-stylesheet type=\\"text/css\\" href=\\"/test/styles.css\\"?>
+      <?xml-stylesheet type=\\"text/xsl\\" href=\\"test/test/styles.xls\\"?>
+      </urlset>"
     `);
   });
 

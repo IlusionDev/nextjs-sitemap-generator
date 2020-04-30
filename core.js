@@ -7,11 +7,12 @@ const fs_1 = __importDefault(require("fs"));
 const date_fns_1 = require("date-fns");
 const path_1 = __importDefault(require("path"));
 class SiteMapper {
-    constructor({ alternateUrls, baseUrl, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet }) {
+    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet }) {
         this.pagesConfig = pagesConfig || {};
         this.alternatesUrls = alternateUrls || {};
         this.baseUrl = baseUrl;
         this.ignoredPaths = ignoredPaths || [];
+        this.extraPaths = extraPaths || [];
         this.ignoreIndexFiles = ignoreIndexFiles || false;
         this.ignoredExtensions = ignoredExtensions || [];
         this.pagesdirectory = pagesDirectory;
@@ -122,7 +123,7 @@ class SiteMapper {
                 console.log(err);
             }
         }
-        const paths = Object.keys(pathMap);
+        const paths = Object.keys(pathMap).concat(this.extraPaths);
         return paths.map(pagePath => {
             let outputPath = pagePath;
             if (exportTrailingSlash) {

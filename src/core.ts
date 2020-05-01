@@ -25,8 +25,10 @@ class SiteMapper {
 
   nextConfigPath?: string;
 
-  sitemap: string;
+  sitemapTag: string;
 
+  sitemapUrlSet: string;
+  
   nextConfig: any;
 
   targetDirectory: string;
@@ -57,7 +59,8 @@ class SiteMapper {
     this.targetDirectory = targetDirectory
     this.nextConfigPath = nextConfigPath
     this.sitemapStylesheet = sitemapStylesheet || []
-    this.sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+    this.sitemapTag = `<?xml version="1.0" encoding="UTF-8"?>`
+    this.sitemapUrlSet = `
       <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" 
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -77,9 +80,9 @@ class SiteMapper {
     let xmlStyle = ''
 
     if (this.sitemapStylesheet) {
-      this.sitemapStylesheet.forEach(({ type, styleFile }) => { xmlStyle += `<?xml-stylesheet type="${type}" href="${styleFile}"?>\n` })
+      this.sitemapStylesheet.forEach(({ type, styleFile }) => { xmlStyle += `<?xml-stylesheet href="${styleFile}" type="${type}" ?>\n` })
     }
-    fs.writeFileSync(path.resolve(this.targetDirectory, './sitemap.xml'), this.sitemap + xmlStyle, {
+    fs.writeFileSync(path.resolve(this.targetDirectory, './sitemap.xml'), this.sitemapTag + xmlStyle + this.sitemapUrlSet, {
       flag: 'w'
     })
   }

@@ -19,7 +19,8 @@ class SiteMapper {
         this.targetDirectory = targetDirectory;
         this.nextConfigPath = nextConfigPath;
         this.sitemapStylesheet = sitemapStylesheet || [];
-        this.sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+        this.sitemapTag = `<?xml version="1.0" encoding="UTF-8"?>`;
+        this.sitemapUrlSet = `
       <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" 
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
@@ -36,9 +37,9 @@ class SiteMapper {
     preLaunch() {
         let xmlStyle = '';
         if (this.sitemapStylesheet) {
-            this.sitemapStylesheet.forEach(({ type, styleFile }) => { xmlStyle += `<?xml-stylesheet type="${type}" href="${styleFile}"?>\n`; });
+            this.sitemapStylesheet.forEach(({ type, styleFile }) => { xmlStyle += `<?xml-stylesheet href="${styleFile}" type="${type}" ?>\n`; });
         }
-        fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './sitemap.xml'), this.sitemap + xmlStyle, {
+        fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './sitemap.xml'), this.sitemapTag + xmlStyle + this.sitemapUrlSet, {
             flag: 'w'
         });
     }

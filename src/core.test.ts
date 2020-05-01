@@ -118,16 +118,16 @@ it("Should generate sitemap.xml", async () => {
 it("should add extraPaths to output", async () => {
   const core = new Core({
     ...config,
-    extraPaths: ['/extraPath'],
+    extraPaths: ["/extraPath"]
   });
 
   const urls = await core.getSitemapURLs(config.pagesDirectory);
 
   expect(urls).toContainEqual({
-    pagePath: '/extraPath',
-    outputPath: '/extraPath',
-    priority: '',
-    changefreq: '',
+    pagePath: "/extraPath",
+    outputPath: "/extraPath",
+    priority: "",
+    changefreq: ""
   });
 });
 
@@ -141,15 +141,15 @@ it("Should generate valid sitemap.xml", async () => {
   );
   expect(sitemap.includes("xml-stylesheet"));
   expect(sitemap).toMatchInlineSnapshot(`
-    "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+    "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><?xml-stylesheet href=\\"/test/styles.css\\" type=\\"text/css\\" ?>
+    <?xml-stylesheet href=\\"test/test/styles.xls\\" type=\\"text/xsl\\" ?>
+
           <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
           http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" 
           xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" 
           xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" 
           xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
-          <?xml-stylesheet type=\\"text/css\\" href=\\"/test/styles.css\\"?>
-    <?xml-stylesheet type=\\"text/xsl\\" href=\\"test/test/styles.xls\\"?>
-    <url><loc>https://example.com.ru/index.old</loc>
+          <url><loc>https://example.com.ru/index.old</loc>
                     <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/index.old\\" />
                     
                     
@@ -219,12 +219,12 @@ it("Should generate styles xml links", async () => {
 
   expect(
     sitemap.includes(
-      '<?xml-stylesheet type="text/xsl" href="test/test/styles.xls"?>'
+      '<?xml-stylesheet href="test/test/styles.xls" type="text/xsl" ?>'
     )
   ).toBe(true);
   expect(
     sitemap.includes(
-      '<?xml-stylesheet type="text/css" href="/test/styles.css"?>'
+      '<?xml-stylesheet href="/test/styles.css" type="text/css" ?>'
     )
   ).toBe(true);
 });
@@ -448,15 +448,15 @@ describe("with nextConfig", () => {
     );
 
     expect(sitemap).toMatchInlineSnapshot(`
-      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><?xml-stylesheet href=\\"/test/styles.css\\" type=\\"text/css\\" ?>
+      <?xml-stylesheet href=\\"test/test/styles.xls\\" type=\\"text/xsl\\" ?>
+
             <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" 
             xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" 
             xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" 
             xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
-            <?xml-stylesheet type=\\"text/css\\" href=\\"/test/styles.css\\"?>
-      <?xml-stylesheet type=\\"text/xsl\\" href=\\"test/test/styles.xls\\"?>
-      </urlset>"
+            </urlset>"
     `);
   });
 
@@ -480,15 +480,15 @@ describe("with nextConfig", () => {
     );
 
     expect(sitemap).toMatchInlineSnapshot(`
-      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
+      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><?xml-stylesheet href=\\"/test/styles.css\\" type=\\"text/css\\" ?>
+      <?xml-stylesheet href=\\"test/test/styles.xls\\" type=\\"text/xsl\\" ?>
+
             <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" 
             xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" 
             xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" 
             xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
-            <?xml-stylesheet type=\\"text/css\\" href=\\"/test/styles.css\\"?>
-      <?xml-stylesheet type=\\"text/xsl\\" href=\\"test/test/styles.xls\\"?>
-      <url><loc>https://example.com.ru/exportPathMapURL/</loc>
+            <url><loc>https://example.com.ru/exportPathMapURL/</loc>
                       <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/exportPathMapURL/\\" />
                       
                       

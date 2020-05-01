@@ -4,8 +4,10 @@
 You can make donations for the maintenance of the project.
 [Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YFXG8SLXPEVXN&source=url)
 
-Simple sitemap.xml mapper for NextJs projects.
+Simple `sitemap.xml` mapper for Next.js projects.
+
 ## Usage
+
 This module have been created to be used at node server side of NextJs.
 It is meant to be used in server.js so that when the server is initialized it will only run once.
 If you place it in any of the request handler of the node server performance may be affected.
@@ -18,42 +20,48 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
 
 ## OPTIONS
 
-    const sitemap = require('nextjs-sitemap-generator');  
+```javascript
+// your_nextjs_sitemap_generator.js
 
-    sitemap({  
-      alternateUrls: {  
-	      en: 'https://example.en',  
-	      es: 'https://example.es',  
-	      ja: 'https://example.jp',  
-	      fr: 'https://example.fr',  
-      },  
-      baseUrl: 'https://example.com',  
-      ignoredPaths: ['admin'],
-      extraPaths: ['/extraPath'],
-      pagesDirectory: __dirname + "\\pages",  
-      targetDirectory : 'static/',
-      nextConfigPath: __dirname + "\\next.config.js",
-      ignoredExtensions: [
-            'png',
-            'jpg'
-      ],
-      pagesConfig: {
-        '/login': {
-          priority: '0.5',
-          changefreq: 'daily'
-        }
-      },
-      sitemapStylesheet: [
-        {
-          type: "text/css",
-          styleFile: "/test/styles.css"
-        },
-        {
-          type: "text/xsl",
-          styleFile: "test/test/styles.xls"
-        }
-      ]
-    });
+const sitemap = require('nextjs-sitemap-generator');
+
+sitemap({
+  alternateUrls: {
+    en: 'https://example.en',
+    es: 'https://example.es',
+    ja: 'https://example.jp',
+    fr: 'https://example.fr',
+  },
+  baseUrl: 'https://example.com',
+  ignoredPaths: ['admin'],
+  extraPaths: ['/extraPath'],
+  pagesDirectory: __dirname + "\\pages",
+  targetDirectory : 'static/',
+  nextConfigPath: __dirname + "\\next.config.js",
+  ignoredExtensions: [
+        'png',
+        'jpg'
+  ],
+  pagesConfig: {
+    '/login': {
+      priority: '0.5',
+      changefreq: 'daily'
+    }
+  },
+  sitemapStylesheet: [
+    {
+      type: "text/css",
+      styleFile: "/test/styles.css"
+    },
+    {
+      type: "text/xsl",
+      styleFile: "test/test/styles.xls"
+    }
+  ]
+});
+
+console.log(`✅ sitemap.xml generated!`);
+```
 
 ## OPTIONS description
 
@@ -68,7 +76,7 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
  - **pagesConfig**:  Object configuration of priority and changefreq per route.(OPTIONAL)
  - **sitemapStylesheet**:  Array of style objects that will be applied to sitemap.(OPTIONAL)
  - **nextConfigPath**(Used for dynamic routes):  Calls `exportPathMap` if exported from `nextConfigPath` js file.
-  See this to understand how to do it (https://github.com/zeit/next.js/blob/canary/examples/with-static-export/next.config.js) (OPTIONAL)
+  See this to understand how to do it (https://nextjs.org/docs/api-reference/next.config.js/exportPathMap) (OPTIONAL)
 
 ## Considerations
 For now the **ignoredPaths** matches whatever cointaning the thing you put, ignoring if there are files or directories.

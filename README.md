@@ -20,7 +20,7 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
 
 #### Usage with `getStaticPaths`
 
-If you are using `nextjs@^9.4.0`, you may have your site configured with getStaticPaths to pregenerate pages on dynamic routes. To add those to your sitemap, you need to load the BUILD_ID file into your config whilst excluding fallback pages:
+If you are using `next@^9.4.0`, you may have your site configured with getStaticPaths to pregenerate pages on dynamic routes. To add those to your sitemap, you need to load the BUILD_ID file into your config whilst excluding fallback pages:
 
 ```js
 const sitemap = require("nextjs-sitemap-generator");

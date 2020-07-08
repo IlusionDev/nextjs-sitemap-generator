@@ -33,6 +33,8 @@ class SiteMapper {
 
   targetDirectory: string;
 
+  sitemapFilename?: string;
+
   sitemapStylesheet?: Array<SitemapStyleFile>;
 
   constructor ({
@@ -43,6 +45,7 @@ class SiteMapper {
     ignoredPaths,
     pagesDirectory,
     targetDirectory,
+    sitemapFilename,
     nextConfigPath,
     ignoredExtensions,
     pagesConfig,
@@ -57,6 +60,7 @@ class SiteMapper {
     this.ignoredExtensions = ignoredExtensions || []
     this.pagesdirectory = pagesDirectory
     this.targetDirectory = targetDirectory
+    this.sitemapFilename = sitemapFilename || 'sitemap.xml'
     this.nextConfigPath = nextConfigPath
     this.sitemapStylesheet = sitemapStylesheet || []
     this.sitemapTag = `<?xml version="1.0" encoding="UTF-8"?>`
@@ -82,13 +86,13 @@ class SiteMapper {
     if (this.sitemapStylesheet) {
       this.sitemapStylesheet.forEach(({ type, styleFile }) => { xmlStyle += `<?xml-stylesheet href="${styleFile}" type="${type}" ?>\n` })
     }
-    fs.writeFileSync(path.resolve(this.targetDirectory, './sitemap.xml'), this.sitemapTag + xmlStyle + this.sitemapUrlSet, {
+    fs.writeFileSync(path.resolve(this.targetDirectory, './', this.sitemapFilename), this.sitemapTag + xmlStyle + this.sitemapUrlSet, {
       flag: 'w'
     })
   }
 
   finish () {
-    fs.writeFileSync(path.resolve(this.targetDirectory, './sitemap.xml'), '</urlset>', {
+    fs.writeFileSync(path.resolve(this.targetDirectory, './', this.sitemapFilename), '</urlset>', {
       flag: 'as'
     })
   }
@@ -237,7 +241,7 @@ class SiteMapper {
                 <lastmod>${date}</lastmod>
                 </url>`
 
-      fs.writeFileSync(path.resolve(this.targetDirectory, './sitemap.xml'), xmlObject, {
+      fs.writeFileSync(path.resolve(this.targetDirectory, './', this.sitemapFilename), xmlObject, {
         flag: 'as'
       })
     })

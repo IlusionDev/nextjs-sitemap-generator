@@ -131,6 +131,21 @@ it("should add extraPaths to output", async () => {
   });
 });
 
+it("Should generate a sitemap with a custom file name", async () => {
+  const coreMapper = new Core({
+    ...config,
+    sitemapFilename: "main.xml",
+  });
+  coreMapper.preLaunch();
+  await coreMapper.sitemapMapper(config.pagesDirectory);
+  coreMapper.finish();
+  const sitemap = fs.statSync(
+    path.resolve(config.targetDirectory, "./main.xml")
+  );
+
+  expect(sitemap.size).toBeGreaterThan(0);
+});
+
 it("Should generate valid sitemap.xml", async () => {
   coreMapper.preLaunch();
   await coreMapper.sitemapMapper(config.pagesDirectory);

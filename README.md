@@ -30,8 +30,9 @@ const BUILD_ID = fs.readFileSync(".next/BUILD_ID").toString();
 
 sitemap({
   baseUrl: "https://example.com",
-  pagesDirectory: __dirname + "/.next/server/static/" + BUILD_ID + "/pages",
+  pagesDirectory: __dirname + "/.next/serverless/pages",
   targetDirectory: "public/",
+  ignoredExtensions: ["js", "map"],
   ignoredPaths: ["[fallback]"],
 });
 ```

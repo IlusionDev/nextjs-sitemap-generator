@@ -18,6 +18,25 @@ If you are exporting the next project as a static HTML app, create a next-sitema
 The option `pagesDirectory` should point to the static files output folder.
 After generating the output files, run `node your_nextjs_sitemap_generator.js` to generate the sitemap.
 
+#### Usage with `getStaticPaths`
+
+If you are using `next@^9.4.0`, you may have your site configured with getStaticPaths to pregenerate pages on dynamic routes. To add those to your sitemap, you need to load the BUILD_ID file into your config whilst excluding fallback pages:
+
+```js
+const sitemap = require("nextjs-sitemap-generator");
+const fs = require("fs");
+
+const BUILD_ID = fs.readFileSync(".next/BUILD_ID").toString();
+
+sitemap({
+  baseUrl: "https://example.com",
+  pagesDirectory: __dirname + "/.next/serverless/pages",
+  targetDirectory: "public/",
+  ignoredExtensions: ["js", "map"],
+  ignoredPaths: ["[fallback]"],
+});
+```
+
 ## OPTIONS
 
 ```javascript

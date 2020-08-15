@@ -12,6 +12,7 @@ export default interface Config {
   pagesDirectory: string;
   nextConfigPath?: string;
   targetDirectory: string;
+  sitemapFilename?: string;
   pagesConfig?: object;
   sitemapStylesheet?: Array<SitemapStyleFile>
 };

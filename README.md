@@ -56,6 +56,7 @@ sitemap({
   extraPaths: ['/extraPath'],
   pagesDirectory: __dirname + "\\pages",
   targetDirectory : 'static/',
+  sitemapFilename: 'sitemap.xml',
   nextConfigPath: __dirname + "\\next.config.js",
   ignoredExtensions: [
         'png',
@@ -92,6 +93,7 @@ console.log(`✅ sitemap.xml generated!`);
  - **ignoredExtensions**:  Ignore files by extension.(OPTIONAL)
  - **pagesDirectory**:  The directory where Nextjs pages live. You can use another directory while they are nextjs pages. **It must to be an absolute path**.
  - **targetDirectory**:  The directory where sitemap.xml going to be written.
+ - **sitemapFilename**:  The filename for the sitemap. Defaults to `sitemap.xml`. (OPTIONAL)
  - **pagesConfig**:  Object configuration of priority and changefreq per route.(OPTIONAL)
  - **sitemapStylesheet**:  Array of style objects that will be applied to sitemap.(OPTIONAL)
  - **nextConfigPath**(Used for dynamic routes):  Calls `exportPathMap` if exported from `nextConfigPath` js file.

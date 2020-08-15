@@ -7,7 +7,7 @@ const fs_1 = __importDefault(require("fs"));
 const date_fns_1 = require("date-fns");
 const path_1 = __importDefault(require("path"));
 class SiteMapper {
-    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet }) {
+    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, sitemapFilename, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet }) {
         this.pagesConfig = pagesConfig || {};
         this.alternatesUrls = alternateUrls || {};
         this.baseUrl = baseUrl;
@@ -17,6 +17,7 @@ class SiteMapper {
         this.ignoredExtensions = ignoredExtensions || [];
         this.pagesdirectory = pagesDirectory;
         this.targetDirectory = targetDirectory;
+        this.sitemapFilename = sitemapFilename || 'sitemap.xml';
         this.nextConfigPath = nextConfigPath;
         this.sitemapStylesheet = sitemapStylesheet || [];
         this.sitemapTag = `<?xml version="1.0" encoding="UTF-8"?>`;
@@ -39,12 +40,12 @@ class SiteMapper {
         if (this.sitemapStylesheet) {
             this.sitemapStylesheet.forEach(({ type, styleFile }) => { xmlStyle += `<?xml-stylesheet href="${styleFile}" type="${type}" ?>\n`; });
         }
-        fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './sitemap.xml'), this.sitemapTag + xmlStyle + this.sitemapUrlSet, {
+        fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './', this.sitemapFilename), this.sitemapTag + xmlStyle + this.sitemapUrlSet, {
             flag: 'w'
         });
     }
     finish() {
-        fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './sitemap.xml'), '</urlset>', {
+        fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './', this.sitemapFilename), '</urlset>', {
             flag: 'as'
         });
     }
@@ -168,7 +169,7 @@ class SiteMapper {
                 ${changefreq}
                 <lastmod>${date}</lastmod>
                 </url>`;
-            fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './sitemap.xml'), xmlObject, {
+            fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './', this.sitemapFilename), xmlObject, {
                 flag: 'as'
             });
         });

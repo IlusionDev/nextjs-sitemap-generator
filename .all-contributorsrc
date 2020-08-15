@@ -40,11 +40,21 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jordanandree",
+      "name": "Jordan Andree",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/235503?v=4",
+      "profile": "https://jordanandree.com",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "projectName": "nextjs-sitemap-generator",
   "projectOwner": "IlusionDev",
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "skipCi": true
 }

@@ -113,18 +113,20 @@ In the next versions this going to be fixed.
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/getriot"><img src="https://avatars3.githubusercontent.com/u/2164596?v=4" width="100px;" alt="Daniele Simeone"/><br /><sub><b>Daniele Simeone</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=getriot" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/illiteratewriter"><img src="https://avatars1.githubusercontent.com/u/5787110?v=4" width="100px;" alt="illiteratewriter"/><br /><sub><b>illiteratewriter</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=illiteratewriter" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://github.com/goran-zdjelar"><img src="https://avatars2.githubusercontent.com/u/45183713?v=4" width="100px;" alt="Goran Zdjelar"/><br /><sub><b>Goran Zdjelar</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=goran-zdjelar" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/jlaramie"><img src="https://avatars0.githubusercontent.com/u/755748?v=4" width="100px;" alt="jlaramie"/><br /><sub><b>jlaramie</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=jlaramie" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/gavinsharp"><img src="https://avatars3.githubusercontent.com/u/327839?s=400&v=4" width="100px;" alt="gavinsharp"/><br /><sub><b>Gavin Sharp
-</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=gavinsharp" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/getriot"><img src="https://avatars3.githubusercontent.com/u/2164596?v=4" width="100px;" alt=""/><br /><sub><b>Daniele Simeone</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=getriot" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/illiteratewriter"><img src="https://avatars1.githubusercontent.com/u/5787110?v=4" width="100px;" alt=""/><br /><sub><b>illiteratewriter</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=illiteratewriter" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/goran-zdjelar"><img src="https://avatars2.githubusercontent.com/u/45183713?v=4" width="100px;" alt=""/><br /><sub><b>Goran Zdjelar</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=goran-zdjelar" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/jlaramie"><img src="https://avatars0.githubusercontent.com/u/755748?v=4" width="100px;" alt=""/><br /><sub><b>jlaramie</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=jlaramie" title="Code">💻</a></td>
+    <td align="center"><a href="https://jordanandree.com"><img src="https://avatars0.githubusercontent.com/u/235503?v=4" width="100px;" alt=""/><br /><sub><b>Jordan Andree</b></sub></a><br /><a href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=jordanandree" title="Code">💻</a></td>
   </tr>
 </table>
 
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

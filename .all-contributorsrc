@@ -40,11 +40,21 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "stewartmcgown",
+      "name": "Stewart McGown",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/1136276?v=4",
+      "profile": "https://ecoeats.uk",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
   "projectName": "nextjs-sitemap-generator",
   "projectOwner": "IlusionDev",
   "repoType": "github",
-  "repoHost": "https://github.com"
+  "repoHost": "https://github.com",
+  "skipCi": true
 }

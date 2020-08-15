@@ -57,8 +57,14 @@ class SiteMapper {
     isIgnoredPath(site) {
         let toIgnore = false;
         for (const ignoredPath of this.ignoredPaths) {
-            if (site.includes(ignoredPath))
-                toIgnore = true;
+            if (typeof ignoredPath == 'string') {
+                if (site.includes(ignoredPath))
+                    toIgnore = true;
+            }
+            else {
+                if (ignoredPath.test(site))
+                    toIgnore = true;
+            }
         }
         return toIgnore;
     }

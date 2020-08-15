@@ -5,7 +5,7 @@ export interface SitemapStyleFile {
 export default interface Config {
   alternateUrls?: object;
   baseUrl: string;
-  ignoredPaths?: Array<string>;
+  ignoredPaths?: Array<string|RegExp>;
   extraPaths?: Array<string>;
   ignoreIndexFiles?: Array<string> | boolean;
   ignoredExtensions?: Array<string>;

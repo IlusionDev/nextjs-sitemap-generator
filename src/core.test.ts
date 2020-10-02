@@ -16,7 +16,7 @@ const config: Config = {
     fr: "https://example.fr"
   },
   baseUrl: "https://example.com.ru",
-  ignoredPaths: ["admin"],
+  ignoredPaths: ["admin", /^\/like\//],
   pagesDirectory: path.resolve(rootPath, "example", "pages__test"),
   targetDirectory: path.resolve(rootPath, "example", "static"),
   ignoreIndexFiles: true,
@@ -60,6 +60,18 @@ it("Should ignore expecified site's path ", () => {
   const ignoredPath = coreMapper.isIgnoredPath("admin");
 
   expect(ignoredPath).toBe(true);
+});
+
+it("Should ignore expecified site's path with regexp", () => {
+  const ignoredPath = coreMapper.isIgnoredPath("/like/product");
+
+  expect(ignoredPath).toBe(true);
+});
+
+it("Should not ignore expecified site's path with regexp", () => {
+  const ignoredPath = coreMapper.isIgnoredPath("/store/product/like-a-vergin");
+
+  expect(ignoredPath).toBe(false);
 });
 
 it("Should skip non expecified sites's path", () => {

@@ -11,7 +11,7 @@ class SiteMapper {
 
   baseUrl: string;
 
-  ignoredPaths?: Array<string>;
+  ignoredPaths?: Array<string|RegExp>;
 
   extraPaths?: Array<string>;
 
@@ -107,7 +107,11 @@ class SiteMapper {
   isIgnoredPath (site: string) {
     let toIgnore = false
     for (const ignoredPath of this.ignoredPaths) {
-      if (site.includes(ignoredPath)) toIgnore = true
+      if (ignoredPath instanceof RegExp) {
+        if (ignoredPath.test(site)) toIgnore = true
+      } else {
+        if (site.includes(ignoredPath)) toIgnore = true
+      }
     }
 
     return toIgnore

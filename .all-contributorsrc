@@ -49,12 +49,21 @@
       "contributions": [
         "doc"
       ]
-     },
-     {
+    },
+    {
       "login": "jordanandree",
       "name": "Jordan Andree",
       "avatar_url": "https://avatars0.githubusercontent.com/u/235503?v=4",
       "profile": "https://jordanandree.com",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "sakamossan",
+      "name": "sakamossan",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5309672?v=4",
+      "profile": "https://github.com/sakamossan",
       "contributions": [
         "code"
       ]

@@ -140,7 +140,7 @@ class SiteMapper {
             let priority = '';
             let changefreq = '';
             if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
-                const pageConfig = this.pagesConfig[pagePath];
+                const pageConfig = this.pagesConfig[pagePath.toLowerCase()];
                 priority = pageConfig.priority;
                 changefreq = pageConfig.changefreq;
             }

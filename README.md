@@ -94,7 +94,7 @@ console.log(`✅ sitemap.xml generated!`);
  - **pagesDirectory**:  The directory where Nextjs pages live. You can use another directory while they are nextjs pages. **It must to be an absolute path**.
  - **targetDirectory**:  The directory where sitemap.xml going to be written.
  - **sitemapFilename**:  The filename for the sitemap. Defaults to `sitemap.xml`. (OPTIONAL)
- - **pagesConfig**:  Object configuration of priority and changefreq per route.(OPTIONAL)
+ - **pagesConfig**:  Object configuration of priority and changefreq per route.(OPTIONAL) **Path keys must be lowercase**
  - **sitemapStylesheet**:  Array of style objects that will be applied to sitemap.(OPTIONAL)
  - **nextConfigPath**(Used for dynamic routes):  Calls `exportPathMap` if exported from `nextConfigPath` js file.
   See this to understand how to do it (https://nextjs.org/docs/api-reference/next.config.js/exportPathMap) (OPTIONAL)

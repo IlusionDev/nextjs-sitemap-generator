@@ -1,16 +1,84 @@
 ![npmv1](https://img.shields.io/npm/v/nextjs-sitemap-generator.svg)
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
-
-You can make donations for the maintenance of the project.
+We are looking for maintainers because I don't have enough time to maintain the package.
+Please consider to make a donation for the maintenance of the project.
 [Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YFXG8SLXPEVXN&source=url)
 
 Simple `sitemap.xml` mapper for Next.js projects.
+## Installation
+To install the package execute this in your terminal if you are using yarn:
+```
+yarn add nextjs-sitemap-generator
+```
+And this if you are using npm:
+```
+npm i --save-dev nextjs-sitemap-generator
+```
+NextJs starts it's own server to serve all created files. But there are another option called [Custom server](https://nextjs.org/docs/advanced-features/custom-server) that uses a file to start a next server.
+If you want use this package you must create the sever file. You can find how to do it here [NextJs custom server](https://nextjs.org/docs/advanced-features/custom-server)
 
-## Usage
 
-This module have been created to be used at node server side of NextJs.
-It is meant to be used in server.js so that when the server is initialized it will only run once.
+
+This module have been created to be used at node [custom server](https://nextjs.org/docs/advanced-features/custom-server) side of NextJs.
+It is meant to be used in index.js/server.js so that when the server is initialized it will only run once.
 If you place it in any of the request handler of the node server performance may be affected.
+
+For those people who deploy in Vercel:
+> A custom server can not be deployed on Vercel, the platform Next.js was made for. 
+
+For example:
+If you have this example server file
+```js
+// server.js
+const sitemap = require('nextjs-sitemap-generator'); // Import the package
+const { createServer } = require('http')
+const { parse } = require('url')
+const next = require('next')
+
+const dev = process.env.NODE_ENV !== 'production'
+const app = next({ dev })
+const handle = app.getRequestHandler()
+
+/* 
+  Here you is you have to use the sitemap function.
+  Using it here you are allowing to generate the sitemap file
+  only once, just when the server starts.
+*/
+sitemap({
+  alternateUrls: {
+    en: 'https://example.en',
+    es: 'https://example.es',
+    ja: 'https://example.jp',
+    fr: 'https://example.fr',
+  },
+  baseUrl: 'https://example.com',
+  ignoredPaths: ['admin'],
+  extraPaths: ['/extraPath'],
+  pagesDirectory: __dirname + "\\pages",
+  targetDirectory : 'static/',
+  sitemapFilename: 'sitemap.xml',
+  nextConfigPath: __dirname + "\\next.config.js",
+  ]
+});
+
+app.prepare().then(() => {
+  createServer((req, res) => {
+    const parsedUrl = parse(req.url, true)
+    const { pathname, query } = parsedUrl
+
+    if (pathname === '/a') {
+      app.render(req, res, '/a', query)
+    } else if (pathname === '/b') {
+      app.render(req, res, '/b', query)
+    } else {
+      handle(req, res, parsedUrl)
+    }
+  }).listen(3000, (err) => {
+    if (err) throw err
+    console.log('> Ready on http://localhost:3000')
+  })
+})
+```
 
 #### Usage for static HTML apps
 

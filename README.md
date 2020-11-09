@@ -1,5 +1,6 @@
 ![npmv1](https://img.shields.io/npm/v/nextjs-sitemap-generator.svg)
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
+
 We are looking for maintainers because I don't have enough time to maintain the package.
 Please consider to make a donation for the maintenance of the project.
 [Donate](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YFXG8SLXPEVXN&source=url)

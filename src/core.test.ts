@@ -167,72 +167,7 @@ it("Should generate valid sitemap.xml", async () => {
     { encoding: "UTF-8" }
   );
   expect(sitemap.includes("xml-stylesheet"));
-  expect(sitemap).toMatchInlineSnapshot(`
-    "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><?xml-stylesheet href=\\"/test/styles.css\\" type=\\"text/css\\" ?>
-    <?xml-stylesheet href=\\"test/test/styles.xls\\" type=\\"text/xsl\\" ?>
-
-          <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
-          http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" 
-          xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" 
-          xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" 
-          xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
-          <url><loc>https://example.com.ru/index.old</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/index.old\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/index.old\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url><url><loc>https://example.com.ru</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url><url><loc>https://example.com.ru/login</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/login\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/login\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/login\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/login\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url><url><loc>https://example.com.ru/product-discount</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/product-discount\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/product-discount\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/product-discount\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/product-discount\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url><url><loc>https://example.com.ru/set-user</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/set-user\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/set-user\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/set-user\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/set-user\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url><url><loc>https://example.com.ru/store/page1</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/page1\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url><url><loc>https://example.com.ru/store/page2</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/page2\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url><url><loc>https://example.com.ru/store/product/page1</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/product/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/product/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/product/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/product/page1\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url><url><loc>https://example.com.ru/store/product/page2</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/product/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/product/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/product/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/product/page2\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url><url><loc>https://example.com.ru/user/page1</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/user/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/user/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/user/page1\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/user/page1\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url><url><loc>https://example.com.ru/user/page2</loc>
-                    <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/user/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/user/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/user/page2\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/user/page2\\" />
-                    
-                    
-                    <lastmod>2020-01-01</lastmod>
-                    </url></urlset>"
-  `);
+  expect(sitemap).toMatchSnapshot()
 });
 
 it("Should generate styles xml links", async () => {
@@ -259,58 +194,7 @@ it("Should generate styles xml links", async () => {
 it("Should make map of sites", () => {
   const result = coreMapper.buildPathMap(config.pagesDirectory);
 
-  expect(result).toMatchInlineSnapshot(`
-    Object {
-      "": Object {
-        "page": "",
-      },
-      "/admin/page1": Object {
-        "page": "/admin/page1",
-      },
-      "/admin/page2": Object {
-        "page": "/admin/page2",
-      },
-      "/admin/page3": Object {
-        "page": "/admin/page3",
-      },
-      "/admin/superadmins/page1": Object {
-        "page": "/admin/superadmins/page1",
-      },
-      "/admin/superadmins/page2": Object {
-        "page": "/admin/superadmins/page2",
-      },
-      "/index.old": Object {
-        "page": "/index.old",
-      },
-      "/login": Object {
-        "page": "/login",
-      },
-      "/product-discount": Object {
-        "page": "/product-discount",
-      },
-      "/set-user": Object {
-        "page": "/set-user",
-      },
-      "/store/page1": Object {
-        "page": "/store/page1",
-      },
-      "/store/page2": Object {
-        "page": "/store/page2",
-      },
-      "/store/product/page1": Object {
-        "page": "/store/product/page1",
-      },
-      "/store/product/page2": Object {
-        "page": "/store/product/page2",
-      },
-      "/user/page1": Object {
-        "page": "/user/page1",
-      },
-      "/user/page2": Object {
-        "page": "/user/page2",
-      },
-    }
-  `);
+  expect(result).toMatchSnapshot()
 });
 
 describe("with nextConfig", () => {
@@ -343,6 +227,38 @@ describe("with nextConfig", () => {
     ]);
   });
 
+  it("should check if exportTrailingSlash exists in Next config", async () => {
+    const core = getCoreWithNextConfig({
+      exportTrailingSlash: true
+    });
+
+    expect(core.checkTrailingSlash()).toBe(true);
+  });
+
+  it("should check if trailingSlash exists in Next config", async () => {
+    const core = getCoreWithNextConfig({
+      trailingSlash: true
+    });
+
+    expect(core.checkTrailingSlash()).toBe(true);
+  });
+
+  it("should check that exportTrailingSlash no exists in Next config", async () => {
+    const core = getCoreWithNextConfig({
+      exportTrailingSlash: false
+    });
+
+    expect(core.checkTrailingSlash()).toBe(false);
+  });
+
+  it("should check that trailingSlash no exists in Next config", async () => {
+    const core = getCoreWithNextConfig({
+      trailingSlash: false
+    });
+
+    expect(core.checkTrailingSlash()).toBe(false);
+  });
+
   it("should respect exportTrailingSlash from Next config", async () => {
     const core = getCoreWithNextConfig({
       exportTrailingSlash: true
@@ -352,107 +268,7 @@ describe("with nextConfig", () => {
 
     const outputPaths = urls.map(url => url.outputPath);
     expect(outputPaths.every(outputPath => outputPath.endsWith("/")));
-
-    expect(urls).toMatchInlineSnapshot(`
-      Array [
-        Object {
-          "changefreq": "",
-          "outputPath": "/admin/page1/",
-          "pagePath": "/admin/page1",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/admin/page2/",
-          "pagePath": "/admin/page2",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/admin/page3/",
-          "pagePath": "/admin/page3",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/admin/superadmins/page1/",
-          "pagePath": "/admin/superadmins/page1",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/admin/superadmins/page2/",
-          "pagePath": "/admin/superadmins/page2",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/index.old/",
-          "pagePath": "/index.old",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/",
-          "pagePath": "",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/login/",
-          "pagePath": "/login",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/product-discount/",
-          "pagePath": "/product-discount",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/set-user/",
-          "pagePath": "/set-user",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/store/page1/",
-          "pagePath": "/store/page1",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/store/page2/",
-          "pagePath": "/store/page2",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/store/product/page1/",
-          "pagePath": "/store/product/page1",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/store/product/page2/",
-          "pagePath": "/store/product/page2",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/user/page1/",
-          "pagePath": "/user/page1",
-          "priority": "",
-        },
-        Object {
-          "changefreq": "",
-          "outputPath": "/user/page2/",
-          "pagePath": "/user/page2",
-          "priority": "",
-        },
-      ]
-    `);
+    expect(urls).toMatchSnapshot()
   });
 
   it("should exclude ignoredPaths returned by exportPathMap", async () => {
@@ -462,7 +278,6 @@ describe("with nextConfig", () => {
           "/admin/": { page: "/" } // should be filtered out by ignoredPaths
         };
       },
-      exportTrailingSlash: true
     });
 
     core.preLaunch();
@@ -474,17 +289,7 @@ describe("with nextConfig", () => {
       { encoding: "UTF-8" }
     );
 
-    expect(sitemap).toMatchInlineSnapshot(`
-      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><?xml-stylesheet href=\\"/test/styles.css\\" type=\\"text/css\\" ?>
-      <?xml-stylesheet href=\\"test/test/styles.xls\\" type=\\"text/xsl\\" ?>
-
-            <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" 
-            xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" 
-            xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" 
-            xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
-            </urlset>"
-    `);
+    expect(sitemap).toMatchSnapshot()
   });
 
   it("should generate valid sitemap", async () => {
@@ -506,21 +311,6 @@ describe("with nextConfig", () => {
       { encoding: "UTF-8" }
     );
 
-    expect(sitemap).toMatchInlineSnapshot(`
-      "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><?xml-stylesheet href=\\"/test/styles.css\\" type=\\"text/css\\" ?>
-      <?xml-stylesheet href=\\"test/test/styles.xls\\" type=\\"text/xsl\\" ?>
-
-            <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" 
-            xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" 
-            xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" 
-            xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
-            <url><loc>https://example.com.ru/exportPathMapURL/</loc>
-                      <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/exportPathMapURL/\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/exportPathMapURL/\\" />
-                      
-                      
-                      <lastmod>2020-01-01</lastmod>
-                      </url></urlset>"
-    `);
+    expect(sitemap).toMatchSnapshot()
   });
 });

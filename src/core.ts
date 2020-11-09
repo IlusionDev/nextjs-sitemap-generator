@@ -28,7 +28,7 @@ class SiteMapper {
   sitemapTag: string;
 
   sitemapUrlSet: string;
-  
+
   nextConfig: any;
 
   targetDirectory: string;
@@ -63,7 +63,7 @@ class SiteMapper {
     this.sitemapFilename = sitemapFilename || 'sitemap.xml'
     this.nextConfigPath = nextConfigPath
     this.sitemapStylesheet = sitemapStylesheet || []
-    this.sitemapTag = `<?xml version="1.0" encoding="UTF-8"?>`
+    this.sitemapTag = '<?xml version="1.0" encoding="UTF-8"?>'
     this.sitemapUrlSet = `
       <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
       http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" 
@@ -176,9 +176,19 @@ class SiteMapper {
     return pathMap
   }
 
-  async getSitemapURLs(dir) {
+  checkTrailingSlash () {
+    if (!this.nextConfig) return false
+    const { exportTrailingSlash, trailingSlash } = this.nextConfig
+    const next9OrlowerVersion = typeof exportTrailingSlash !== 'undefined'
+    const next10Version = typeof trailingSlash !== 'undefined'
+    if ((next9OrlowerVersion || next10Version) && (exportTrailingSlash || trailingSlash)) return true
+
+    return false
+  }
+
+  async getSitemapURLs (dir) {
     let pathMap = this.buildPathMap(dir)
-    const exportTrailingSlash = this.nextConfig && this.nextConfig.exportTrailingSlash
+    const exportTrailingSlash = this.checkTrailingSlash()
 
     const exportPathMap = this.nextConfig && this.nextConfig.exportPathMap
     if (exportPathMap) {
@@ -210,12 +220,12 @@ class SiteMapper {
         pagePath,
         outputPath,
         priority,
-        changefreq,
+        changefreq
       }
-    });
+    })
   }
 
-  async sitemapMapper(dir) {
+  async sitemapMapper (dir) {
     const urls = await this.getSitemapURLs(dir)
 
     const filteredURLs = urls.filter(url => !this.isIgnoredPath(url.pagePath))

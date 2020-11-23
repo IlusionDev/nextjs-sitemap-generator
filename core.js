@@ -149,7 +149,26 @@ class SiteMapper {
             }
             let priority = '';
             let changefreq = '';
-            if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
+            if (!this.pagesConfig) {
+                return {
+                    pagePath,
+                    outputPath,
+                    priority,
+                    changefreq
+                };
+            }
+            // 1. Generic wildcard configs go first
+            Object.entries(this.pagesConfig).forEach(([key, val]) => {
+                if (key.includes("*")) {
+                    let regex = new RegExp(key, "i");
+                    if (regex.test(pagePath)) {
+                        priority = val.priority;
+                        changefreq = val.changefreq;
+                    }
+                }
+            });
+            // 2. Specific page config go second
+            if (this.pagesConfig[pagePath.toLowerCase()]) {
                 const pageConfig = this.pagesConfig[pagePath.toLowerCase()];
                 priority = pageConfig.priority;
                 changefreq = pageConfig.changefreq;

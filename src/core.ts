@@ -254,27 +254,38 @@ class SiteMapper {
     const date = format(new Date(), 'yyyy-MM-dd')
 
     filteredURLs.forEach((url) => {
-      let alternates = ''
-      let priority = ''
-      let changefreq = ''
+      let xmlObject = `\n\t<url>`;
 
+      // Location
+      let location = `<loc>${this.baseUrl}${url.outputPath}</loc>`;
+      xmlObject = xmlObject.concat(`\n\t\t${location}`);
+
+      // Alternates
+      let alternates = '';
       for (const langSite in this.alternatesUrls) {
-        alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${url.outputPath}" />`
+          alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${url.outputPath}" />`;
+      }
+      if (alternates != '') {
+          xmlObject = xmlObject.concat(`\n\t\t${alternates}`);
       }
 
+      // Priority
       if (url.priority) {
-        priority = `<priority>${url.priority}</priority>`
-      }
-      if (url.changefreq) {
-        changefreq = `<changefreq>${url.changefreq}</changefreq>`
+          let priority = `<priority>${url.priority}</priority>`;
+          xmlObject = xmlObject.concat(`\n\t\t${priority}`);
       }
 
-      const xmlObject = `<url><loc>${this.baseUrl}${url.outputPath}</loc>
-                ${alternates}
-                ${priority}
-                ${changefreq}
-                <lastmod>${date}</lastmod>
-                </url>`
+      // Change Frequency
+      if (url.changefreq) {
+          let changefreq = `<changefreq>${url.changefreq}</changefreq>`;
+          xmlObject = xmlObject.concat(`\n\t\t${changefreq}`);
+      }
+
+      // Last Modification
+      let lastmod = `<lastmod>${date}</lastmod>`;
+      xmlObject = xmlObject.concat(`\n\t\t${lastmod}`);
+
+      xmlObject = xmlObject.concat(`\n\t</url>\n`);
 
       fs.writeFileSync(path.resolve(this.targetDirectory, './', this.sitemapFilename), xmlObject, {
         flag: 'as'

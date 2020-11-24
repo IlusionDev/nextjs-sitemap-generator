@@ -4,7 +4,8 @@
   "description": "Generate sitemap.xml from nextjs pages",
   "main": "index.js",
   "scripts": {
-    "test": "yarn jest && tsc"
+    "test": "yarn jest && tsc",
+    "tsc": "tsc"
   },
   "keywords": [
     "nextjs",

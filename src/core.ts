@@ -203,7 +203,7 @@ class SiteMapper {
 
     return paths.map(pagePath => {
       let outputPath = pagePath
-      if (exportTrailingSlash) {
+      if (exportTrailingSlash && outputPath.slice(-1) !== '/') {
         outputPath += '/'
       }
 

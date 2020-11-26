@@ -144,7 +144,7 @@ class SiteMapper {
         const paths = Object.keys(pathMap).concat(this.extraPaths);
         return paths.map(pagePath => {
             let outputPath = pagePath;
-            if (exportTrailingSlash) {
+            if (exportTrailingSlash && outputPath.slice(-1) !== '/') {
                 outputPath += '/';
             }
             let priority = '';

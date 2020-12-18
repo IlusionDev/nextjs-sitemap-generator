@@ -331,7 +331,6 @@ describe('with showExtensions', () => {
     });
 
     it('Should match the snapshot', () => {
-
       expect(result).toMatchSnapshot();
     });
   });

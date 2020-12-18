@@ -222,7 +222,7 @@ class SiteMapper {
       let priority = ''
       let changefreq = ''
 
-      // We don't want to add the extension if the exportTrailingSlash is enabled. 
+      // Appending the extension to a trailing slash would result in an invalid path. Which is why it must be false
       if(this.showExtensions && !exportTrailingSlash && pathMap && pathMap[pagePath] && pathMap[pagePath].extension) {
         outputPath += `.${pathMap[pagePath].extension}`;
       }

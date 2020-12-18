@@ -87,6 +87,7 @@ If you are exporting the next project as a static HTML app, create a next-sitema
 The option `pagesDirectory` should point to the static files output folder.
 After generating the output files, run `node your_nextjs_sitemap_generator.js` to generate the sitemap.
 
+If your pages are statically served then you will need to set the `showExtensions` option as `true` so that the pages contain the extension, most cases being `.html`. 
 #### Usage with `getStaticPaths`
 
 If you are using `next@^9.4.0`, you may have your site configured with getStaticPaths to pregenerate pages on dynamic routes. To add those to your sitemap, you need to load the BUILD_ID file into your config whilst excluding fallback pages:
@@ -166,6 +167,7 @@ console.log(`✅ sitemap.xml generated!`);
  - **pagesConfig**:  Object configuration of priority and changefreq per route.(OPTIONAL) **Path keys must be lowercase**
  - **sitemapStylesheet**:  Array of style objects that will be applied to sitemap.(OPTIONAL)
  - **nextConfigPath**(Used for dynamic routes):  Calls `exportPathMap` if exported from `nextConfigPath` js file.
+ - **showExtensions**(Used for static applications): Ensures the file extension is displayed with the path in the sitemap (OPTIONAL)
   See this to understand how to do it (https://nextjs.org/docs/api-reference/next.config.js/exportPathMap) (OPTIONAL)
 
 ## Considerations

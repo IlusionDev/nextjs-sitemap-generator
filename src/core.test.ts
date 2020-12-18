@@ -314,3 +314,27 @@ describe("with nextConfig", () => {
     expect(sitemap).toMatchSnapshot()
   });
 });
+
+describe('with showExtensions', () => {
+  const duplicateConfig = Object.assign({
+    showExtensions: true,
+  }, config);
+  const coreMapper = new Core(duplicateConfig);
+
+  describe('buildPathMap', () => {
+    const result = coreMapper.buildPathMap(duplicateConfig.pagesDirectory);
+
+    it('Should contain a list of pages with their extension', () => {
+      expect(result['/login']).toMatchObject({
+        extension: 'tsx'
+      });
+    });
+
+    it('Should match the snapshot', () => {
+
+      expect(result).toMatchSnapshot();
+    });
+  });
+
+
+});

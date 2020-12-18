@@ -7,7 +7,7 @@ const fs_1 = __importDefault(require("fs"));
 const date_fns_1 = require("date-fns");
 const path_1 = __importDefault(require("path"));
 class SiteMapper {
-    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, sitemapFilename, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet }) {
+    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, sitemapFilename, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet, showExtensions, }) {
         this.pagesConfig = pagesConfig || {};
         this.alternatesUrls = alternateUrls || {};
         this.baseUrl = baseUrl;
@@ -20,6 +20,7 @@ class SiteMapper {
         this.sitemapFilename = sitemapFilename || 'sitemap.xml';
         this.nextConfigPath = nextConfigPath;
         this.sitemapStylesheet = sitemapStylesheet || [];
+        this.showExtensions = showExtensions || false;
         this.sitemapTag = '<?xml version="1.0" encoding="UTF-8"?>';
         this.sitemapUrlSet = `
       <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
@@ -116,6 +117,12 @@ class SiteMapper {
             pathMap[pagePath] = {
                 page: pagePath
             };
+            if (this.showExtensions && fileExtension) {
+                pathMap[pagePath] = {
+                    extension: (this.showExtensions && fileExtension) ? fileExtension : undefined,
+                    ...pathMap[pagePath]
+                };
+            }
         }
         return pathMap;
     }
@@ -149,6 +156,10 @@ class SiteMapper {
             }
             let priority = '';
             let changefreq = '';
+            // We don't want to add the extension if the exportTrailingSlash is enabled. 
+            if (this.showExtensions && !exportTrailingSlash && pathMap && pathMap[pagePath] && pathMap[pagePath].extension) {
+                outputPath += `.${pathMap[pagePath].extension}`;
+            }
             if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
                 const pageConfig = this.pagesConfig[pagePath.toLowerCase()];
                 priority = pageConfig.priority;

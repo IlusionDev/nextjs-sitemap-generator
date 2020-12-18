@@ -37,6 +37,8 @@ class SiteMapper {
 
   sitemapStylesheet?: Array<SitemapStyleFile>;
 
+  showExtensions?: boolean;
+
   constructor ({
     alternateUrls,
     baseUrl,
@@ -49,7 +51,8 @@ class SiteMapper {
     nextConfigPath,
     ignoredExtensions,
     pagesConfig,
-    sitemapStylesheet
+    sitemapStylesheet,
+    showExtensions,
   }: Config) {
     this.pagesConfig = pagesConfig || {}
     this.alternatesUrls = alternateUrls || {}
@@ -63,6 +66,7 @@ class SiteMapper {
     this.sitemapFilename = sitemapFilename || 'sitemap.xml'
     this.nextConfigPath = nextConfigPath
     this.sitemapStylesheet = sitemapStylesheet || []
+    this.showExtensions = showExtensions || false
     this.sitemapTag = '<?xml version="1.0" encoding="UTF-8"?>'
     this.sitemapUrlSet = `
       <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
@@ -171,6 +175,13 @@ class SiteMapper {
       pathMap[pagePath] = {
         page: pagePath
       }
+
+      if(this.showExtensions && fileExtension) {
+        pathMap[pagePath] = {
+          extension: (this.showExtensions && fileExtension) ? fileExtension : undefined,
+          ...pathMap[pagePath]
+        }
+      }
     }
 
     return pathMap
@@ -187,7 +198,8 @@ class SiteMapper {
   }
 
   async getSitemapURLs (dir) {
-    let pathMap = this.buildPathMap(dir)
+    let pathMap = this.buildPathMap(dir);
+
     const exportTrailingSlash = this.checkTrailingSlash()
 
     const exportPathMap = this.nextConfig && this.nextConfig.exportPathMap
@@ -209,6 +221,11 @@ class SiteMapper {
 
       let priority = ''
       let changefreq = ''
+
+      // We don't want to add the extension if the exportTrailingSlash is enabled. 
+      if(this.showExtensions && !exportTrailingSlash && pathMap && pathMap[pagePath] && pathMap[pagePath].extension) {
+        outputPath += `.${pathMap[pagePath].extension}`;
+      }
 
       if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
         const pageConfig = this.pagesConfig[pagePath.toLowerCase()];

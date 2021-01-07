@@ -58,8 +58,7 @@ sitemap({
   pagesDirectory: __dirname + "\\pages",
   targetDirectory : 'static/',
   sitemapFilename: 'sitemap.xml',
-  nextConfigPath: __dirname + "\\next.config.js",
-  ]
+  nextConfigPath: __dirname + "\\next.config.js"
 });
 
 app.prepare().then(() => {

@@ -37,7 +37,7 @@ class SiteMapper {
 
   sitemapStylesheet?: Array<SitemapStyleFile>;
 
-  showExtensions?: boolean;
+  allowFileExtensions?: boolean;
 
   constructor ({
     alternateUrls,
@@ -52,7 +52,7 @@ class SiteMapper {
     ignoredExtensions,
     pagesConfig,
     sitemapStylesheet,
-    showExtensions,
+    allowFileExtensions,
   }: Config) {
     this.pagesConfig = pagesConfig || {}
     this.alternatesUrls = alternateUrls || {}
@@ -66,7 +66,7 @@ class SiteMapper {
     this.sitemapFilename = sitemapFilename || 'sitemap.xml'
     this.nextConfigPath = nextConfigPath
     this.sitemapStylesheet = sitemapStylesheet || []
-    this.showExtensions = showExtensions || false
+    this.allowFileExtensions = allowFileExtensions || false
     this.sitemapTag = '<?xml version="1.0" encoding="UTF-8"?>'
     this.sitemapUrlSet = `
       <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
@@ -170,17 +170,10 @@ class SiteMapper {
 
       if (newDir === '/index') newDir = ''
 
-      const pagePath = this.mergePath(newDir, fileNameWithoutExtension)
+      const pagePath = this.mergePath(newDir, this.allowFileExtensions ? site : fileNameWithoutExtension)
 
       pathMap[pagePath] = {
         page: pagePath
-      }
-
-      if(this.showExtensions && fileExtension) {
-        pathMap[pagePath] = {
-          extension: (this.showExtensions && fileExtension) ? fileExtension : undefined,
-          ...pathMap[pagePath]
-        }
       }
     }
 
@@ -215,20 +208,15 @@ class SiteMapper {
 
     return paths.map(pagePath => {
       let outputPath = pagePath
-      if (exportTrailingSlash) {
+      if (exportTrailingSlash && !this.allowFileExtensions) {
         outputPath += '/'
       }
 
       let priority = ''
       let changefreq = ''
 
-      // Appending the extension to a trailing slash would result in an invalid path. Which is why it must be false
-      if(this.showExtensions && !exportTrailingSlash && pathMap && pathMap[pagePath] && pathMap[pagePath].extension) {
-        outputPath += `.${pathMap[pagePath].extension}`;
-      }
-
       if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
-        const pageConfig = this.pagesConfig[pagePath.toLowerCase()];
+        const pageConfig = this.pagesConfig[pagePath.toLowerCase()]
         priority = pageConfig.priority
         changefreq = pageConfig.changefreq
       }

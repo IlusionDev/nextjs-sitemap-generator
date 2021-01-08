@@ -15,5 +15,5 @@ export default interface Config {
   sitemapFilename?: string;
   pagesConfig?: object;
   sitemapStylesheet?: Array<SitemapStyleFile>
-  showExtensions?: boolean;
+  allowFileExtensions?: boolean;
 };

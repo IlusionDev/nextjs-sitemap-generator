@@ -210,7 +210,7 @@ describe("Core testing", () => {
   it('Should match the snapshot if allowFileExtensions', async () => {
     const core = new Core({
       ...config,
-      allowFileExtensions: false,
+      allowFileExtensions: true,
     });
     core.preLaunch();
     await core.sitemapMapper(config.pagesDirectory);

@@ -200,7 +200,7 @@ describe("Core testing", () => {
   it('Should contain a list of pages with their extension if allowFileExtensions', () => {
     const coreMapper = new Core({
       ...config,
-      allowFileExtensions: false,
+      allowFileExtensions: true,
     });
     const result = coreMapper.buildPathMap(config.pagesDirectory);
 

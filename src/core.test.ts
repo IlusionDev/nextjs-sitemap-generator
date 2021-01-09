@@ -228,6 +228,15 @@ describe("Core testing", () => {
 })
 
 describe("TestCore with nextConfig", () => {
+  
+  beforeEach(() => {
+    MockDate.set("2020-01-01T12:00:00Z");
+  });
+  
+  afterAll(() => {
+    MockDate.reset();
+  });
+
   function getCoreWithNextConfig(nextConfig) {
     const core = new Core(config);
 

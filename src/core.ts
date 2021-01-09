@@ -52,7 +52,7 @@ class SiteMapper {
     ignoredExtensions,
     pagesConfig,
     sitemapStylesheet,
-    allowFileExtensions,
+    allowFileExtensions
   }: Config) {
     this.pagesConfig = pagesConfig || {}
     this.alternatesUrls = alternateUrls || {}
@@ -191,7 +191,7 @@ class SiteMapper {
   }
 
   async getSitemapURLs (dir) {
-    let pathMap = this.buildPathMap(dir);
+    let pathMap = this.buildPathMap(dir)
 
     const exportTrailingSlash = this.checkTrailingSlash()
 

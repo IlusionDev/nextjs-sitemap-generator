@@ -7,7 +7,7 @@ const fs_1 = __importDefault(require("fs"));
 const date_fns_1 = require("date-fns");
 const path_1 = __importDefault(require("path"));
 class SiteMapper {
-    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, sitemapFilename, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet }) {
+    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, sitemapFilename, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet, allowFileExtensions }) {
         this.pagesConfig = pagesConfig || {};
         this.alternatesUrls = alternateUrls || {};
         this.baseUrl = baseUrl;
@@ -20,6 +20,7 @@ class SiteMapper {
         this.sitemapFilename = sitemapFilename || 'sitemap.xml';
         this.nextConfigPath = nextConfigPath;
         this.sitemapStylesheet = sitemapStylesheet || [];
+        this.allowFileExtensions = allowFileExtensions || false;
         this.sitemapTag = '<?xml version="1.0" encoding="UTF-8"?>';
         this.sitemapUrlSet = `
       <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
@@ -112,7 +113,7 @@ class SiteMapper {
             let newDir = dir.replace(this.pagesdirectory, '').replace(/\\/g, '/');
             if (newDir === '/index')
                 newDir = '';
-            const pagePath = this.mergePath(newDir, fileNameWithoutExtension);
+            const pagePath = this.mergePath(newDir, this.allowFileExtensions ? site : fileNameWithoutExtension);
             pathMap[pagePath] = {
                 page: pagePath
             };
@@ -144,7 +145,7 @@ class SiteMapper {
         const paths = Object.keys(pathMap).concat(this.extraPaths);
         return paths.map(pagePath => {
             let outputPath = pagePath;
-            if (exportTrailingSlash) {
+            if (exportTrailingSlash && !this.allowFileExtensions) {
                 outputPath += '/';
             }
             let priority = '';

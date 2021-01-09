@@ -33,171 +33,210 @@ const config: Config = {
   ]
 };
 const coreMapper = new Core(config);
-
-beforeEach(() => {
-  MockDate.set("2020-01-01T12:00:00Z");
-});
-
-afterAll(() => {
-  MockDate.reset();
-});
-
-it("Should detect reserved sites", () => {
-  const underscoredSite = coreMapper.isReservedPage("_admin");
-  const dotedSite = coreMapper.isReservedPage(".admin");
-
-  expect(underscoredSite).toBe(true);
-  expect(dotedSite).toBe(true);
-});
-
-it("Should skip non reserved sites", () => {
-  const site = coreMapper.isReservedPage("admin");
-
-  expect(site).toBe(false);
-});
-
-it("Should ignore expecified site's path ", () => {
-  const ignoredPath = coreMapper.isIgnoredPath("admin");
-
-  expect(ignoredPath).toBe(true);
-});
-
-it("Should ignore expecified site's path with regexp", () => {
-  const ignoredPath = coreMapper.isIgnoredPath("/like/product");
-
-  expect(ignoredPath).toBe(true);
-});
-
-it("Should not ignore expecified site's path with regexp", () => {
-  const ignoredPath = coreMapper.isIgnoredPath("/store/product/like-a-vergin");
-
-  expect(ignoredPath).toBe(false);
-});
-
-it("Should skip non expecified sites's path", () => {
-  const ignoredPath = coreMapper.isReservedPage("admin");
-
-  expect(ignoredPath).toBe(false);
-});
-
-it("Should ignore expecified extensions", () => {
-  const ignoredExtension = coreMapper.isIgnoredExtension("yml");
-
-  expect(ignoredExtension).toBe(true);
-});
-
-it("Should skip non expecified extensions", () => {
-  const ignoredExtension = coreMapper.isReservedPage("jsx");
-
-  expect(ignoredExtension).toBe(false);
-});
-
-it("Should merge path", () => {
-  const mergedPath = coreMapper.mergePath("/admin", "list");
-
-  expect(mergedPath).toEqual("/admin/list");
-});
-
-it("Should merge path from empty base path", () => {
-  const mergedPath = coreMapper.mergePath("", "list");
-
-  expect(mergedPath).toEqual("/list");
-});
-
-it("Should merge path from ignored path", () => {
-  const mergedPath = coreMapper.mergePath("/admin", "");
-
-  expect(mergedPath).toEqual("/admin");
-});
-
-it("Should merge empty path", () => {
-  const mergedPath = coreMapper.mergePath("", "");
-
-  expect(mergedPath).toEqual("");
-});
-
-it("Should generate sitemap.xml", async () => {
-  coreMapper.preLaunch();
-  await coreMapper.sitemapMapper(config.pagesDirectory);
-  coreMapper.finish();
-  const sitemap = fs.statSync(
-    path.resolve(config.targetDirectory, "./sitemap.xml")
-  );
-
-  expect(sitemap.size).toBeGreaterThan(0);
-});
-
-it("should add extraPaths to output", async () => {
-  const core = new Core({
-    ...config,
-    extraPaths: ["/extraPath"]
+describe("Core testing", () => {
+  beforeEach(() => {
+    MockDate.set("2020-01-01T12:00:00Z");
+  });
+  
+  afterAll(() => {
+    MockDate.reset();
+  });
+  
+  it("Should detect reserved sites", () => {
+    const underscoredSite = coreMapper.isReservedPage("_admin");
+    const dotedSite = coreMapper.isReservedPage(".admin");
+  
+    expect(underscoredSite).toBe(true);
+    expect(dotedSite).toBe(true);
+  });
+  
+  it("Should skip non reserved sites", () => {
+    const site = coreMapper.isReservedPage("admin");
+  
+    expect(site).toBe(false);
+  });
+  
+  it("Should ignore expecified site's path ", () => {
+    const ignoredPath = coreMapper.isIgnoredPath("admin");
+  
+    expect(ignoredPath).toBe(true);
+  });
+  
+  it("Should ignore expecified site's path with regexp", () => {
+    const ignoredPath = coreMapper.isIgnoredPath("/like/product");
+  
+    expect(ignoredPath).toBe(true);
+  });
+  
+  it("Should not ignore expecified site's path with regexp", () => {
+    const ignoredPath = coreMapper.isIgnoredPath("/store/product/like-a-vergin");
+  
+    expect(ignoredPath).toBe(false);
+  });
+  
+  it("Should skip non expecified sites's path", () => {
+    const ignoredPath = coreMapper.isReservedPage("admin");
+  
+    expect(ignoredPath).toBe(false);
+  });
+  
+  it("Should ignore expecified extensions", () => {
+    const ignoredExtension = coreMapper.isIgnoredExtension("yml");
+  
+    expect(ignoredExtension).toBe(true);
+  });
+  
+  it("Should skip non expecified extensions", () => {
+    const ignoredExtension = coreMapper.isReservedPage("jsx");
+  
+    expect(ignoredExtension).toBe(false);
+  });
+  
+  it("Should merge path", () => {
+    const mergedPath = coreMapper.mergePath("/admin", "list");
+  
+    expect(mergedPath).toEqual("/admin/list");
+  });
+  
+  it("Should merge path from empty base path", () => {
+    const mergedPath = coreMapper.mergePath("", "list");
+  
+    expect(mergedPath).toEqual("/list");
+  });
+  
+  it("Should merge path from ignored path", () => {
+    const mergedPath = coreMapper.mergePath("/admin", "");
+  
+    expect(mergedPath).toEqual("/admin");
+  });
+  
+  it("Should merge empty path", () => {
+    const mergedPath = coreMapper.mergePath("", "");
+  
+    expect(mergedPath).toEqual("");
+  });
+  
+  it("Should generate sitemap.xml", async () => {
+    coreMapper.preLaunch();
+    await coreMapper.sitemapMapper(config.pagesDirectory);
+    coreMapper.finish();
+    const sitemap = fs.statSync(
+      path.resolve(config.targetDirectory, "./sitemap.xml")
+    );
+  
+    expect(sitemap.size).toBeGreaterThan(0);
+  });
+  
+  it("should add extraPaths to output", async () => {
+    const core = new Core({
+      ...config,
+      extraPaths: ["/extraPath"]
+    });
+  
+    const urls = await core.getSitemapURLs(config.pagesDirectory);
+  
+    expect(urls).toContainEqual({
+      pagePath: "/extraPath",
+      outputPath: "/extraPath",
+      priority: "",
+      changefreq: ""
+    });
+  });
+  
+  it("Should generate a sitemap with a custom file name", async () => {
+    const coreMapper = new Core({
+      ...config,
+      sitemapFilename: "main.xml",
+    });
+    coreMapper.preLaunch();
+    await coreMapper.sitemapMapper(config.pagesDirectory);
+    coreMapper.finish();
+    const sitemap = fs.statSync(
+      path.resolve(config.targetDirectory, "./main.xml")
+    );
+  
+    expect(sitemap.size).toBeGreaterThan(0);
+  });
+  
+  it("Should generate valid sitemap.xml", async () => {
+    coreMapper.preLaunch();
+    await coreMapper.sitemapMapper(config.pagesDirectory);
+    coreMapper.finish();
+    const sitemap = fs.readFileSync(
+      path.resolve(config.targetDirectory, "./sitemap.xml"),
+      { encoding: "UTF-8" }
+    );
+    expect(sitemap.includes("xml-stylesheet"));
+    expect(sitemap).toMatchSnapshot()
+  });
+  
+  it("Should generate styles xml links", async () => {
+    coreMapper.preLaunch();
+    await coreMapper.sitemapMapper(config.pagesDirectory);
+    coreMapper.finish();
+    const sitemap = fs.readFileSync(
+      path.resolve(config.targetDirectory, "./sitemap.xml"),
+      { encoding: "UTF-8" }
+    );
+  
+    expect(
+      sitemap.includes(
+        '<?xml-stylesheet href="test/test/styles.xls" type="text/xsl" ?>'
+      )
+    ).toBe(true);
+    expect(
+      sitemap.includes(
+        '<?xml-stylesheet href="/test/styles.css" type="text/css" ?>'
+      )
+    ).toBe(true);
+  });
+  
+  it("Should make map of sites", () => {
+    const result = coreMapper.buildPathMap(config.pagesDirectory);
+  
+    expect(result).toMatchSnapshot()
   });
 
-  const urls = await core.getSitemapURLs(config.pagesDirectory);
+  it('Should contain a list of pages with their extension if allowFileExtensions', () => {
+    const coreMapper = new Core({
+      ...config,
+      allowFileExtensions: true,
+    });
+    const result = coreMapper.buildPathMap(config.pagesDirectory);
 
-  expect(urls).toContainEqual({
-    pagePath: "/extraPath",
-    outputPath: "/extraPath",
-    priority: "",
-    changefreq: ""
+    expect(result['/admin/page1.tsx']).toMatchObject({"page": "/admin/page1.tsx"});
   });
-});
+ 
+  it('Should match the snapshot if allowFileExtensions', async () => {
+    const core = new Core({
+      ...config,
+      allowFileExtensions: true,
+    });
+    core.preLaunch();
+    await core.sitemapMapper(config.pagesDirectory);
+    core.finish();
 
-it("Should generate a sitemap with a custom file name", async () => {
-  const coreMapper = new Core({
-    ...config,
-    sitemapFilename: "main.xml",
+    const sitemap = fs.readFileSync(
+      path.resolve(config.targetDirectory, "./sitemap.xml"),
+      { encoding: "UTF-8" }
+    );
+
+    expect(sitemap).toMatchSnapshot();
   });
-  coreMapper.preLaunch();
-  await coreMapper.sitemapMapper(config.pagesDirectory);
-  coreMapper.finish();
-  const sitemap = fs.statSync(
-    path.resolve(config.targetDirectory, "./main.xml")
-  );
+  
+  
+})
 
-  expect(sitemap.size).toBeGreaterThan(0);
-});
+describe("TestCore with nextConfig", () => {
+  
+  beforeEach(() => {
+    MockDate.set("2020-01-01T12:00:00Z");
+  });
+  
+  afterAll(() => {
+    MockDate.reset();
+  });
 
-it("Should generate valid sitemap.xml", async () => {
-  coreMapper.preLaunch();
-  await coreMapper.sitemapMapper(config.pagesDirectory);
-  coreMapper.finish();
-  const sitemap = fs.readFileSync(
-    path.resolve(config.targetDirectory, "./sitemap.xml"),
-    { encoding: "UTF-8" }
-  );
-  expect(sitemap.includes("xml-stylesheet"));
-  expect(sitemap).toMatchSnapshot()
-});
-
-it("Should generate styles xml links", async () => {
-  coreMapper.preLaunch();
-  await coreMapper.sitemapMapper(config.pagesDirectory);
-  coreMapper.finish();
-  const sitemap = fs.readFileSync(
-    path.resolve(config.targetDirectory, "./sitemap.xml"),
-    { encoding: "UTF-8" }
-  );
-
-  expect(
-    sitemap.includes(
-      '<?xml-stylesheet href="test/test/styles.xls" type="text/xsl" ?>'
-    )
-  ).toBe(true);
-  expect(
-    sitemap.includes(
-      '<?xml-stylesheet href="/test/styles.css" type="text/css" ?>'
-    )
-  ).toBe(true);
-});
-
-it("Should make map of sites", () => {
-  const result = coreMapper.buildPathMap(config.pagesDirectory);
-
-  expect(result).toMatchSnapshot()
-});
-
-describe("with nextConfig", () => {
   function getCoreWithNextConfig(nextConfig) {
     const core = new Core(config);
 

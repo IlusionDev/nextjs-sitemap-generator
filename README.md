@@ -91,35 +91,19 @@ only once, just when the server starts.
 */
 
 sitemap({
-
-alternateUrls:  {
-
-en:  'https://example.en',
-
-es:  'https://example.es',
-
-ja:  'https://example.jp',
-
-fr:  'https://example.fr',
-
-},
-
-baseUrl:  'https://example.com',
-
-ignoredPaths: ['admin'],
-
-extraPaths: ['/extraPath'],
-
-pagesDirectory: __dirname +  "\\pages",
-
-targetDirectory :  'static/',
-
-sitemapFilename:  'sitemap.xml',
-
-nextConfigPath: __dirname +  "\\next.config.js",
-
-]
-
+  alternateUrls: {
+    en: 'https://example.en',
+    es: 'https://example.es',
+    ja: 'https://example.jp',
+    fr: 'https://example.fr',
+  },
+  baseUrl: 'https://example.com',
+  ignoredPaths: ['admin'],
+  extraPaths: ['/extraPath'],
+  pagesDirectory: __dirname + "\\pages",
+  targetDirectory : 'static/',
+  sitemapFilename: 'sitemap.xml',
+  nextConfigPath: __dirname + "\\next.config.js"
 });
 
   

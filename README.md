@@ -336,7 +336,7 @@ console.log(`✅ sitemap.xml generated!`);
 
     See this to understand how to do it (https://nextjs.org/docs/api-reference/next.config.js/exportPathMap) (OPTIONAL)
 
--  **allowFileExtensions**(Used for static applications): Ensures the file extension is displayed with the path in the sitemap (OPTIONAL)
+-  **allowFileExtensions**(Used for static applications): Ensures the file extension is displayed with the path in the sitemap. If you are using nextConfigPath with exportTrailingSlash in next config, allowFileExtensions will be ignored.  (OPTIONAL)
 
   
 

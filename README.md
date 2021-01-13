@@ -109,37 +109,20 @@ sitemap({
   
 
 app.prepare().then(()  =>  {
-
-createServer((req,  res)  =>  {
-
-const  parsedUrl  =  parse(req.url,  true)
-
-const  {  pathname,  query  }  =  parsedUrl
-
-  
-
-if (pathname  ===  '/a') {
-
-app.render(req,  res,  '/a',  query)
-
-}  else  if (pathname  ===  '/b') {
-
-app.render(req,  res,  '/b',  query)
-
-}  else  {
-
-handle(req,  res,  parsedUrl)
-
-}
-
-}).listen(3000,  (err)  =>  {
-
-if (err) throw  err
-
-console.log('> Ready on http://localhost:3000')
-
-})
-
+  createServer((req,  res)  =>  {
+    const  parsedUrl  =  parse(req.url,  true)
+    const  {  pathname,  query  }  =  parsedUrl
+    if (pathname  ===  '/a') {
+      app.render(req,  res,  '/a',  query)
+    }  
+    else  if (pathname  ===  '/b') {
+      app.render(req,  res,  '/b',  query)
+    }  else  {
+      handle(req,  res,  parsedUrl)
+  }}).listen(3000,  (err)  =>  {
+    if (err) throw  err
+    console.log('> Ready on http://localhost:3000')
+ })
 })
 
 ```
@@ -148,7 +131,6 @@ console.log('> Ready on http://localhost:3000')
 
 #### Usage for static HTML apps
 
-  
 
 If you are exporting the next project as a static HTML app, create a next-sitemap-generator script file in the base directory.
 
@@ -162,9 +144,7 @@ If your pages are statically served then you will need to set the `showExtension
 
 #### Usage with `getStaticPaths`
 
-  
-
-If you are using `next@^9.4.0`, you may have your site configured with getStaticPaths to pregenerate pages on dynamic routes. To add those to your sitemap, you need to load the BUILD_ID file into your config whilst excluding fallback pages:
+If you are using `next@^9.4.0`, you may have your site configured with getStaticPaths to pregenerate pages on dynamic routes. To add those to your sitemap, you need to load the BUILD_ID file into your config to reach the generated build directory with statics pages inside, whilst excluding everything that isn't static pages:
 
   
 
@@ -181,17 +161,12 @@ const BUILD_ID = fs.readFileSync(".next/BUILD_ID").toString();
   
 
 sitemap({
-
-baseUrl:  "https://example.com",
-
-pagesDirectory: __dirname +  "/.next/serverless/pages",
-
-targetDirectory:  "public/",
-
-ignoredExtensions: ["js",  "map"],
-
-ignoredPaths: ["[fallback]"],
-
+  baseUrl: "https://example.com",
+  // If you are using Vercel platform to deploy change the route to /.next/serverless/pages 
+  pagesDirectory: __dirname + "/.next/server/static/" + BUILD_ID + "/pages",
+  targetDirectory: "public/",
+  ignoredExtensions: ["js", "map"],
+  ignoredPaths: ["assets"], // Exclude everything that isn't static page
 });
 
 ```
@@ -203,97 +178,65 @@ ignoredPaths: ["[fallback]"],
   
 
 ```javascript
-
 // your_nextjs_sitemap_generator.js
 
-  
-
-const sitemap =  require('nextjs-sitemap-generator');
-
-  
+const sitemap = require("nextjs-sitemap-generator");
 
 sitemap({
+  alternateUrls: {
+    en: "https://example.en",
 
-alternateUrls:  {
+    es: "https://example.es",
 
-en:  'https://example.en',
+    ja: "https://example.jp",
 
-es:  'https://example.es',
+    fr: "https://example.fr",
+  },
 
-ja:  'https://example.jp',
+  baseUrl: "https://example.com",
 
-fr:  'https://example.fr',
+  ignoredPaths: ["admin"],
 
-},
+  extraPaths: ["/extraPath"],
 
-baseUrl:  'https://example.com',
+  pagesDirectory: __dirname + "\\pages",
 
-ignoredPaths: ['admin'],
+  targetDirectory: "static/",
 
-extraPaths: ['/extraPath'],
+  sitemapFilename: "sitemap.xml",
 
-pagesDirectory: __dirname +  "\\pages",
+  nextConfigPath: __dirname + "\\next.config.js",
 
-targetDirectory :  'static/',
+  ignoredExtensions: ["png", "jpg"],
 
-sitemapFilename:  'sitemap.xml',
+  pagesConfig: {
+    "/login": {
+      priority: "0.5",
 
-nextConfigPath: __dirname +  "\\next.config.js",
+      changefreq: "daily",
+    },
+  },
 
-ignoredExtensions: [
+  sitemapStylesheet: [
+    {
+      type: "text/css",
 
-'png',
+      styleFile: "/test/styles.css",
+    },
 
-'jpg'
+    {
+      type: "text/xsl",
 
-],
-
-pagesConfig:  {
-
-'/login':  {
-
-priority:  '0.5',
-
-changefreq:  'daily'
-
-}
-
-},
-
-sitemapStylesheet: [
-
-{
-
-type:  "text/css",
-
-styleFile:  "/test/styles.css"
-
-},
-
-{
-
-type:  "text/xsl",
-
-styleFile:  "test/test/styles.xls"
-
-}
-
-]
-
+      styleFile: "test/test/styles.xls",
+    },
+  ],
 });
-
-  
 
 console.log(`✅ sitemap.xml generated!`);
 
+
 ```
-
-  
-
 ## OPTIONS description
-
-  
-
 -  **alternateUrls**: You can add the alternate domains corresponding to the available language. (OPTIONAL)
 
 -  **baseUrl**: The url that it's going to be used at the beginning of each page.
@@ -321,66 +264,8 @@ console.log(`✅ sitemap.xml generated!`);
     See this to understand how to do it (https://nextjs.org/docs/api-reference/next.config.js/exportPathMap) (OPTIONAL)
 
 -  **allowFileExtensions**(Used for static applications): Ensures the file extension is displayed with the path in the sitemap. If you are using nextConfigPath with exportTrailingSlash in next config, allowFileExtensions will be ignored.  (OPTIONAL)
-
   
 
 ## Considerations
-
 For now the **ignoredPaths** matches whatever cointaning the thing you put, ignoring if there are files or directories.
-
 In the next versions this going to be fixed.
-
-  
-  
-  
-  
-  
-  
-
-## Contributors
-
-  
-
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
-
-  
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-
-<!-- prettier-ignore-start -->
-
-<!-- markdownlint-disable -->
-
-<table>
-
-<tr>
-
-<td align="center"><a  href="https://github.com/getriot"><img  src="https://avatars3.githubusercontent.com/u/2164596?v=4"  width="100px;"  alt=""/><br /><sub><b>Daniele Simeone</b></sub></a><br /><a  href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=getriot"  title="Code">💻</a></td>
-
-<td align="center"><a  href="https://github.com/illiteratewriter"><img  src="https://avatars1.githubusercontent.com/u/5787110?v=4"  width="100px;"  alt=""/><br /><sub><b>illiteratewriter</b></sub></a><br /><a  href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=illiteratewriter"  title="Documentation">📖</a></td>
-
-<td align="center"><a  href="https://github.com/goran-zdjelar"><img  src="https://avatars2.githubusercontent.com/u/45183713?v=4"  width="100px;"  alt=""/><br /><sub><b>Goran Zdjelar</b></sub></a><br /><a  href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=goran-zdjelar"  title="Code">💻</a></td>
-
-<td align="center"><a  href="https://github.com/jlaramie"><img  src="https://avatars0.githubusercontent.com/u/755748?v=4"  width="100px;"  alt=""/><br /><sub><b>jlaramie</b></sub></a><br /><a  href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=jlaramie"  title="Code">💻</a></td>
-
-<td align="center"><a  href="https://ecoeats.uk"><img  src="https://avatars2.githubusercontent.com/u/1136276?v=4"  width="100px;"  alt=""/><br /><sub><b>Stewart McGown</b></sub></a><br /><a  href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=stewartmcgown"  title="Documentation">📖</a></td>
-
-<td align="center"><a  href="https://jordanandree.com"><img  src="https://avatars0.githubusercontent.com/u/235503?v=4"  width="100px;"  alt=""/><br /><sub><b>Jordan Andree</b></sub></a><br /><a  href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=jordanandree"  title="Code">💻</a></td>
-
-<td align="center"><a  href="https://github.com/sakamossan"><img  src="https://avatars3.githubusercontent.com/u/5309672?v=4"  width="100px;"  alt=""/><br /><sub><b>sakamossan</b></sub></a><br /><a  href="https://github.com/IlusionDev/nextjs-sitemap-generator/commits?author=sakamossan"  title="Code">💻</a></td>
-
-</tr>
-
-</table>
-
-  
-
-<!-- markdownlint-enable -->
-
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
-
-  
-
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Should generate valid sitemap.xml 1`] = `
+exports[`Core testing Should generate valid sitemap.xml 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><?xml-stylesheet href=\\"/test/styles.css\\" type=\\"text/css\\" ?>
 <?xml-stylesheet href=\\"test/test/styles.xls\\" type=\\"text/xsl\\" ?>
 
@@ -67,7 +67,7 @@ exports[`Should generate valid sitemap.xml 1`] = `
                 </url></urlset>"
 `;
 
-exports[`Should make map of sites 1`] = `
+exports[`Core testing Should make map of sites 1`] = `
 Object {
   "": Object {
     "page": "",
@@ -120,7 +120,74 @@ Object {
 }
 `;
 
-exports[`with nextConfig should exclude ignoredPaths returned by exportPathMap 1`] = `
+exports[`Core testing Should match the snapshot if allowFileExtensions 1`] = `
+"<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><?xml-stylesheet href=\\"/test/styles.css\\" type=\\"text/css\\" ?>
+<?xml-stylesheet href=\\"test/test/styles.xls\\" type=\\"text/xsl\\" ?>
+
+      <urlset xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 
+      http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd\\" 
+      xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" 
+      xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\" 
+      xmlns:xhtml=\\"http://www.w3.org/1999/xhtml\\">
+      <url><loc>https://example.com.ru/index.old.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/index.old.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/index.old.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/index.old.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/index.old.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url><url><loc>https://example.com.ru/index.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/index.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/index.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/index.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/index.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url><url><loc>https://example.com.ru/login.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/login.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/login.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/login.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/login.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url><url><loc>https://example.com.ru/product-discount.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/product-discount.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/product-discount.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/product-discount.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/product-discount.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url><url><loc>https://example.com.ru/set-user.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/set-user.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/set-user.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/set-user.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/set-user.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url><url><loc>https://example.com.ru/store/page1.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/page1.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/page1.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/page1.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/page1.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url><url><loc>https://example.com.ru/store/page2.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/page2.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/page2.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/page2.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/page2.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url><url><loc>https://example.com.ru/store/product/page1.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/product/page1.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/product/page1.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/product/page1.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/product/page1.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url><url><loc>https://example.com.ru/store/product/page2.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/store/product/page2.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/store/product/page2.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/store/product/page2.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/store/product/page2.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url><url><loc>https://example.com.ru/user/page1.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/user/page1.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/user/page1.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/user/page1.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/user/page1.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url><url><loc>https://example.com.ru/user/page2.tsx</loc>
+                <xhtml:link rel=\\"alternate\\" hreflang=\\"en\\" href=\\"https://example.en/user/page2.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"es\\" href=\\"https://example.es/user/page2.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"ja\\" href=\\"https://example.jp/user/page2.tsx\\" /><xhtml:link rel=\\"alternate\\" hreflang=\\"fr\\" href=\\"https://example.fr/user/page2.tsx\\" />
+                
+                
+                <lastmod>2020-01-01</lastmod>
+                </url></urlset>"
+`;
+
+exports[`TestCore with nextConfig should exclude ignoredPaths returned by exportPathMap 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><?xml-stylesheet href=\\"/test/styles.css\\" type=\\"text/css\\" ?>
 <?xml-stylesheet href=\\"test/test/styles.xls\\" type=\\"text/xsl\\" ?>
 
@@ -132,7 +199,7 @@ exports[`with nextConfig should exclude ignoredPaths returned by exportPathMap 1
       </urlset>"
 `;
 
-exports[`with nextConfig should generate valid sitemap 1`] = `
+exports[`TestCore with nextConfig should generate valid sitemap 1`] = `
 "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?><?xml-stylesheet href=\\"/test/styles.css\\" type=\\"text/css\\" ?>
 <?xml-stylesheet href=\\"test/test/styles.xls\\" type=\\"text/xsl\\" ?>
 
@@ -149,7 +216,7 @@ exports[`with nextConfig should generate valid sitemap 1`] = `
                 </url></urlset>"
 `;
 
-exports[`with nextConfig should respect exportTrailingSlash from Next config 1`] = `
+exports[`TestCore with nextConfig should respect exportTrailingSlash from Next config 1`] = `
 Array [
   Object {
     "changefreq": "",

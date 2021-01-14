@@ -37,6 +37,8 @@ class SiteMapper {
 
   sitemapStylesheet?: Array<SitemapStyleFile>;
 
+  allowFileExtensions?: boolean;
+
   constructor ({
     alternateUrls,
     baseUrl,
@@ -49,7 +51,8 @@ class SiteMapper {
     nextConfigPath,
     ignoredExtensions,
     pagesConfig,
-    sitemapStylesheet
+    sitemapStylesheet,
+    allowFileExtensions
   }: Config) {
     this.pagesConfig = pagesConfig || {}
     this.alternatesUrls = alternateUrls || {}
@@ -63,6 +66,7 @@ class SiteMapper {
     this.sitemapFilename = sitemapFilename || 'sitemap.xml'
     this.nextConfigPath = nextConfigPath
     this.sitemapStylesheet = sitemapStylesheet || []
+    this.allowFileExtensions = allowFileExtensions || false
     this.sitemapTag = '<?xml version="1.0" encoding="UTF-8"?>'
     this.sitemapUrlSet = `
       <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
@@ -166,7 +170,7 @@ class SiteMapper {
 
       if (newDir === '/index') newDir = ''
 
-      const pagePath = this.mergePath(newDir, fileNameWithoutExtension)
+      const pagePath = this.mergePath(newDir, this.allowFileExtensions ? site : fileNameWithoutExtension)
 
       pathMap[pagePath] = {
         page: pagePath
@@ -188,6 +192,7 @@ class SiteMapper {
 
   async getSitemapURLs (dir) {
     let pathMap = this.buildPathMap(dir)
+
     const exportTrailingSlash = this.checkTrailingSlash()
 
     const exportPathMap = this.nextConfig && this.nextConfig.exportPathMap
@@ -203,7 +208,7 @@ class SiteMapper {
 
     return paths.map(pagePath => {
       let outputPath = pagePath
-      if (exportTrailingSlash) {
+      if (exportTrailingSlash && !this.allowFileExtensions) {
         outputPath += '/'
       }
 

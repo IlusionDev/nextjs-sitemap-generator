@@ -39,7 +39,9 @@ class SiteMapper {
     preLaunch() {
         let xmlStyle = '';
         if (this.sitemapStylesheet) {
-            this.sitemapStylesheet.forEach(({ type, styleFile }) => { xmlStyle += `<?xml-stylesheet href="${styleFile}" type="${type}" ?>\n`; });
+            this.sitemapStylesheet.forEach(({ type, styleFile }) => {
+                xmlStyle += `<?xml-stylesheet href="${styleFile}" type="${type}" ?>\n`;
+            });
         }
         fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './', this.sitemapFilename), this.sitemapTag + xmlStyle + this.sitemapUrlSet, {
             flag: 'w'
@@ -109,7 +111,10 @@ class SiteMapper {
             if (this.isIgnoredExtension(fileExtension))
                 continue;
             let fileNameWithoutExtension = site.substring(0, site.length - (fileExtension.length + 1));
-            fileNameWithoutExtension = this.ignoreIndexFiles && fileNameWithoutExtension === 'index' ? '' : fileNameWithoutExtension;
+            fileNameWithoutExtension =
+                this.ignoreIndexFiles && fileNameWithoutExtension === 'index'
+                    ? ''
+                    : fileNameWithoutExtension;
             let newDir = dir.replace(this.pagesdirectory, '').replace(/\\/g, '/');
             if (newDir === '/index')
                 newDir = '';
@@ -126,8 +131,10 @@ class SiteMapper {
         const { exportTrailingSlash, trailingSlash } = this.nextConfig;
         const next9OrlowerVersion = typeof exportTrailingSlash !== 'undefined';
         const next10Version = typeof trailingSlash !== 'undefined';
-        if ((next9OrlowerVersion || next10Version) && (exportTrailingSlash || trailingSlash))
+        if ((next9OrlowerVersion || next10Version) &&
+            (exportTrailingSlash || trailingSlash)) {
             return true;
+        }
         return false;
     }
     async getSitemapURLs(dir) {
@@ -143,9 +150,9 @@ class SiteMapper {
             }
         }
         const paths = Object.keys(pathMap).concat(this.extraPaths);
-        return paths.map(pagePath => {
+        return paths.map((pagePath) => {
             let outputPath = pagePath;
-            if (exportTrailingSlash && outputPath.slice(-1) !== '/') {
+            if (exportTrailingSlash && !this.allowFileExtensions && outputPath.slice(-1) !== '/') {
                 outputPath += '/';
             }
             let priority = '';
@@ -158,17 +165,15 @@ class SiteMapper {
                     changefreq
                 };
             }
-            // 1. Generic wildcard configs go first
             Object.entries(this.pagesConfig).forEach(([key, val]) => {
-                if (key.includes("*")) {
-                    let regex = new RegExp(key, "i");
+                if (key.includes('*')) {
+                    const regex = new RegExp(key, 'i');
                     if (regex.test(pagePath)) {
                         priority = val.priority;
                         changefreq = val.changefreq;
                     }
                 }
             });
-            // 2. Specific page config go second
             if (this.pagesConfig[pagePath.toLowerCase()]) {
                 const pageConfig = this.pagesConfig[pagePath.toLowerCase()];
                 priority = pageConfig.priority;
@@ -184,35 +189,29 @@ class SiteMapper {
     }
     async sitemapMapper(dir) {
         const urls = await this.getSitemapURLs(dir);
-        const filteredURLs = urls.filter(url => !this.isIgnoredPath(url.pagePath));
+        const filteredURLs = urls.filter((url) => !this.isIgnoredPath(url.pagePath));
         const date = date_fns_1.format(new Date(), 'yyyy-MM-dd');
         filteredURLs.forEach((url) => {
-            let xmlObject = `\n\t<url>`;
-            // Location
-            let location = `<loc>${this.baseUrl}${url.outputPath}</loc>`;
-            xmlObject = xmlObject.concat(`\n\t\t${location}`);
-            // Alternates
+            let xmlObject = '\n\t<url>';
+            const location = `<loc>${this.baseUrl}${url.outputPath}</loc>`;
+            xmlObject += `\n\t\t${location}`;
             let alternates = '';
             for (const langSite in this.alternatesUrls) {
                 alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${url.outputPath}" />`;
             }
-            if (alternates != '') {
-                xmlObject = xmlObject.concat(`\n\t\t${alternates}`);
+            if (alternates !== '') {
+                xmlObject += `\n\t\t${alternates}`;
             }
-            // Priority
             if (url.priority) {
-                let priority = `<priority>${url.priority}</priority>`;
-                xmlObject = xmlObject.concat(`\n\t\t${priority}`);
+                const priority = `<priority>${url.priority}</priority>`;
+                xmlObject += `\n\t\t${priority}`;
             }
-            // Change Frequency
             if (url.changefreq) {
-                let changefreq = `<changefreq>${url.changefreq}</changefreq>`;
-                xmlObject = xmlObject.concat(`\n\t\t${changefreq}`);
+                const changefreq = `<changefreq>${url.changefreq}</changefreq>`;
+                xmlObject += `\n\t\t${changefreq}`;
             }
-            // Last Modification
-            let lastmod = `<lastmod>${date}</lastmod>`;
-            xmlObject = xmlObject.concat(`\n\t\t${lastmod}`);
-            xmlObject = xmlObject.concat(`\n\t</url>\n`);
+            const lastmod = `<lastmod>${date}</lastmod>`;
+            xmlObject += `\n\t\t${lastmod}\n\t</url>\n`;
             fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './', this.sitemapFilename), xmlObject, {
                 flag: 'as'
             });

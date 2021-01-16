@@ -7,7 +7,7 @@ const fs_1 = __importDefault(require("fs"));
 const date_fns_1 = require("date-fns");
 const path_1 = __importDefault(require("path"));
 class SiteMapper {
-    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, sitemapFilename, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet }) {
+    constructor({ alternateUrls, baseUrl, extraPaths, ignoreIndexFiles, ignoredPaths, pagesDirectory, targetDirectory, sitemapFilename, nextConfigPath, ignoredExtensions, pagesConfig, sitemapStylesheet, allowFileExtensions }) {
         this.pagesConfig = pagesConfig || {};
         this.alternatesUrls = alternateUrls || {};
         this.baseUrl = baseUrl;
@@ -20,6 +20,7 @@ class SiteMapper {
         this.sitemapFilename = sitemapFilename || 'sitemap.xml';
         this.nextConfigPath = nextConfigPath;
         this.sitemapStylesheet = sitemapStylesheet || [];
+        this.allowFileExtensions = allowFileExtensions || false;
         this.sitemapTag = '<?xml version="1.0" encoding="UTF-8"?>';
         this.sitemapUrlSet = `
       <urlset xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
@@ -112,7 +113,7 @@ class SiteMapper {
             let newDir = dir.replace(this.pagesdirectory, '').replace(/\\/g, '/');
             if (newDir === '/index')
                 newDir = '';
-            const pagePath = this.mergePath(newDir, fileNameWithoutExtension);
+            const pagePath = this.mergePath(newDir, this.allowFileExtensions ? site : fileNameWithoutExtension);
             pathMap[pagePath] = {
                 page: pagePath
             };
@@ -149,7 +150,26 @@ class SiteMapper {
             }
             let priority = '';
             let changefreq = '';
-            if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
+            if (!this.pagesConfig) {
+                return {
+                    pagePath,
+                    outputPath,
+                    priority,
+                    changefreq
+                };
+            }
+            // 1. Generic wildcard configs go first
+            Object.entries(this.pagesConfig).forEach(([key, val]) => {
+                if (key.includes("*")) {
+                    let regex = new RegExp(key, "i");
+                    if (regex.test(pagePath)) {
+                        priority = val.priority;
+                        changefreq = val.changefreq;
+                    }
+                }
+            });
+            // 2. Specific page config go second
+            if (this.pagesConfig[pagePath.toLowerCase()]) {
                 const pageConfig = this.pagesConfig[pagePath.toLowerCase()];
                 priority = pageConfig.priority;
                 changefreq = pageConfig.changefreq;
@@ -167,24 +187,32 @@ class SiteMapper {
         const filteredURLs = urls.filter(url => !this.isIgnoredPath(url.pagePath));
         const date = date_fns_1.format(new Date(), 'yyyy-MM-dd');
         filteredURLs.forEach((url) => {
+            let xmlObject = `\n\t<url>`;
+            // Location
+            let location = `<loc>${this.baseUrl}${url.outputPath}</loc>`;
+            xmlObject = xmlObject.concat(`\n\t\t${location}`);
+            // Alternates
             let alternates = '';
-            let priority = '';
-            let changefreq = '';
             for (const langSite in this.alternatesUrls) {
                 alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${url.outputPath}" />`;
             }
+            if (alternates != '') {
+                xmlObject = xmlObject.concat(`\n\t\t${alternates}`);
+            }
+            // Priority
             if (url.priority) {
-                priority = `<priority>${url.priority}</priority>`;
+                let priority = `<priority>${url.priority}</priority>`;
+                xmlObject = xmlObject.concat(`\n\t\t${priority}`);
             }
+            // Change Frequency
             if (url.changefreq) {
-                changefreq = `<changefreq>${url.changefreq}</changefreq>`;
+                let changefreq = `<changefreq>${url.changefreq}</changefreq>`;
+                xmlObject = xmlObject.concat(`\n\t\t${changefreq}`);
             }
-            const xmlObject = `<url><loc>${this.baseUrl}${url.outputPath}</loc>
-                ${alternates}
-                ${priority}
-                ${changefreq}
-                <lastmod>${date}</lastmod>
-                </url>`;
+            // Last Modification
+            let lastmod = `<lastmod>${date}</lastmod>`;
+            xmlObject = xmlObject.concat(`\n\t\t${lastmod}`);
+            xmlObject = xmlObject.concat(`\n\t</url>\n`);
             fs_1.default.writeFileSync(path_1.default.resolve(this.targetDirectory, './', this.sitemapFilename), xmlObject, {
                 flag: 'as'
             });

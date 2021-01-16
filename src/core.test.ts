@@ -287,6 +287,28 @@ describe("TestCore with nextConfig", () => {
     ]);
   });
 
+  it("should not append a slash to url that already ends in a slash", async () => {
+    const core = getCoreWithNextConfig({
+      exportTrailingSlash: true,
+      async exportPathMap(defaultMap) {
+        return {
+          "/": { page: "/" },
+        };
+      }
+    });
+
+    const urls = await core.getSitemapURLs(config.pagesDirectory);
+
+    expect(urls).toEqual([
+      {
+        changefreq: "",
+        outputPath: "/",
+        pagePath: "/",
+        priority: ""
+      }
+    ]);
+  });
+
   it("should check if exportTrailingSlash exists in Next config", async () => {
     const core = getCoreWithNextConfig({
       exportTrailingSlash: true

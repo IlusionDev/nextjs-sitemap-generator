@@ -243,7 +243,6 @@ class SiteMapper {
         }
       }
 
-      // 1. Generic wildcard configs go first
       Object.entries(this.pagesConfig).forEach(([key, val]) => {
         if (key.includes('*')) {
           const regex = new RegExp(key, 'i')
@@ -254,7 +253,6 @@ class SiteMapper {
         }
       })
 
-      // 2. Specific page config go second
       if (this.pagesConfig[pagePath.toLowerCase()]) {
         const pageConfig = this.pagesConfig[pagePath.toLowerCase()]
         priority = pageConfig.priority
@@ -282,36 +280,29 @@ class SiteMapper {
     filteredURLs.forEach((url) => {
       let xmlObject = '\n\t<url>'
 
-      // Location
       const location = `<loc>${this.baseUrl}${url.outputPath}</loc>`
-      xmlObject = xmlObject.concat(`\n\t\t${location}`)
+      xmlObject += `\n\t\t${location}`
 
-      // Alternates
       let alternates = ''
       for (const langSite in this.alternatesUrls) {
         alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${url.outputPath}" />`
       }
       if (alternates !== '') {
-        xmlObject = xmlObject.concat(`\n\t\t${alternates}`)
+        xmlObject += `\n\t\t${alternates}`
       }
 
-      // Priority
       if (url.priority) {
         const priority = `<priority>${url.priority}</priority>`
-        xmlObject = xmlObject.concat(`\n\t\t${priority}`)
+        xmlObject += `\n\t\t${priority}`
       }
 
-      // Change Frequency
       if (url.changefreq) {
         const changefreq = `<changefreq>${url.changefreq}</changefreq>`
-        xmlObject = xmlObject.concat(`\n\t\t${changefreq}`)
+        xmlObject += `\n\t\t${changefreq}`
       }
 
-      // Last Modification
       const lastmod = `<lastmod>${date}</lastmod>`
-      xmlObject = xmlObject.concat(`\n\t\t${lastmod}`)
-
-      xmlObject = xmlObject.concat('\n\t</url>\n')
+      xmlObject += `\n\t\t${lastmod}\n\t</url>\n`
 
       fs.writeFileSync(
         path.resolve(this.targetDirectory, './', this.sitemapFilename),

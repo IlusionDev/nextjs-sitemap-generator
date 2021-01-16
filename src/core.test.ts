@@ -223,8 +223,29 @@ describe("Core testing", () => {
 
     expect(sitemap).toMatchSnapshot();
   });
-  
-  
+
+  it('Should use regex in pagesConfig', async () => {
+    const core = new Core({
+      ...config,
+      allowFileExtensions: true,
+    });
+    config.pagesConfig = {
+      "/store/product/*": {
+        priority: "0.6",
+        changefreq: "weekly"
+      },
+    }
+    core.preLaunch();
+    await core.sitemapMapper(config.pagesDirectory);
+    core.finish();
+
+    const sitemap = fs.readFileSync(
+      path.resolve(config.targetDirectory, "./sitemap.xml"),
+      { encoding: "UTF-8" }
+    );
+
+    expect(sitemap).toMatchSnapshot();
+  });
 })
 
 describe("TestCore with nextConfig", () => {

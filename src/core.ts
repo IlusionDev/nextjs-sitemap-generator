@@ -11,7 +11,7 @@ class SiteMapper {
 
   baseUrl: string;
 
-  ignoredPaths?: Array<string|RegExp>;
+  ignoredPaths?: Array<string | RegExp>;
 
   extraPaths?: Array<string>;
 
@@ -88,17 +88,27 @@ class SiteMapper {
     let xmlStyle = ''
 
     if (this.sitemapStylesheet) {
-      this.sitemapStylesheet.forEach(({ type, styleFile }) => { xmlStyle += `<?xml-stylesheet href="${styleFile}" type="${type}" ?>\n` })
+      this.sitemapStylesheet.forEach(({ type, styleFile }) => {
+        xmlStyle += `<?xml-stylesheet href="${styleFile}" type="${type}" ?>\n`
+      })
     }
-    fs.writeFileSync(path.resolve(this.targetDirectory, './', this.sitemapFilename), this.sitemapTag + xmlStyle + this.sitemapUrlSet, {
-      flag: 'w'
-    })
+    fs.writeFileSync(
+      path.resolve(this.targetDirectory, './', this.sitemapFilename),
+      this.sitemapTag + xmlStyle + this.sitemapUrlSet,
+      {
+        flag: 'w'
+      }
+    )
   }
 
   finish () {
-    fs.writeFileSync(path.resolve(this.targetDirectory, './', this.sitemapFilename), '</urlset>', {
-      flag: 'as'
-    })
+    fs.writeFileSync(
+      path.resolve(this.targetDirectory, './', this.sitemapFilename),
+      '</urlset>',
+      {
+        flag: 'as'
+      }
+    )
   }
 
   isReservedPage (site: string): boolean {
@@ -163,8 +173,14 @@ class SiteMapper {
       const fileExtension = site.split('.').pop()
       if (this.isIgnoredExtension(fileExtension)) continue
 
-      let fileNameWithoutExtension = site.substring(0, site.length - (fileExtension.length + 1))
-      fileNameWithoutExtension = this.ignoreIndexFiles && fileNameWithoutExtension === 'index' ? '' : fileNameWithoutExtension
+      let fileNameWithoutExtension = site.substring(
+        0,
+        site.length - (fileExtension.length + 1)
+      )
+      fileNameWithoutExtension =
+        this.ignoreIndexFiles && fileNameWithoutExtension === 'index'
+          ? ''
+          : fileNameWithoutExtension
 
       let newDir = dir.replace(this.pagesdirectory, '').replace(/\\/g, '/')
 
@@ -185,7 +201,10 @@ class SiteMapper {
     const { exportTrailingSlash, trailingSlash } = this.nextConfig
     const next9OrlowerVersion = typeof exportTrailingSlash !== 'undefined'
     const next10Version = typeof trailingSlash !== 'undefined'
-    if ((next9OrlowerVersion || next10Version) && (exportTrailingSlash || trailingSlash)) return true
+    if (
+      (next9OrlowerVersion || next10Version) &&
+      (exportTrailingSlash || trailingSlash)
+    ) { return true }
 
     return false
   }
@@ -206,7 +225,7 @@ class SiteMapper {
 
     const paths = Object.keys(pathMap).concat(this.extraPaths)
 
-    return paths.map(pagePath => {
+    return paths.map((pagePath) => {
       let outputPath = pagePath
       if (exportTrailingSlash && !this.allowFileExtensions) {
         outputPath += '/'
@@ -215,7 +234,26 @@ class SiteMapper {
       let priority = ''
       let changefreq = ''
 
-      if (this.pagesConfig && this.pagesConfig[pagePath.toLowerCase()]) {
+      if (!this.pagesConfig) {
+        return {
+          pagePath,
+          outputPath,
+          priority,
+          changefreq
+        }
+      }
+
+      Object.entries(this.pagesConfig).forEach(([key, val]) => {
+        if (key.includes('*')) {
+          const regex = new RegExp(key, 'i')
+          if (regex.test(pagePath)) {
+            priority = val.priority
+            changefreq = val.changefreq
+          }
+        }
+      })
+
+      if (this.pagesConfig[pagePath.toLowerCase()]) {
         const pageConfig = this.pagesConfig[pagePath.toLowerCase()]
         priority = pageConfig.priority
         changefreq = pageConfig.changefreq
@@ -233,36 +271,46 @@ class SiteMapper {
   async sitemapMapper (dir) {
     const urls = await this.getSitemapURLs(dir)
 
-    const filteredURLs = urls.filter(url => !this.isIgnoredPath(url.pagePath))
+    const filteredURLs = urls.filter(
+      (url) => !this.isIgnoredPath(url.pagePath)
+    )
 
     const date = format(new Date(), 'yyyy-MM-dd')
 
     filteredURLs.forEach((url) => {
-      let alternates = ''
-      let priority = ''
-      let changefreq = ''
+      let xmlObject = '\n\t<url>'
 
+      const location = `<loc>${this.baseUrl}${url.outputPath}</loc>`
+      xmlObject += `\n\t\t${location}`
+
+      let alternates = ''
       for (const langSite in this.alternatesUrls) {
         alternates += `<xhtml:link rel="alternate" hreflang="${langSite}" href="${this.alternatesUrls[langSite]}${url.outputPath}" />`
       }
+      if (alternates !== '') {
+        xmlObject += `\n\t\t${alternates}`
+      }
 
       if (url.priority) {
-        priority = `<priority>${url.priority}</priority>`
+        const priority = `<priority>${url.priority}</priority>`
+        xmlObject += `\n\t\t${priority}`
       }
+
       if (url.changefreq) {
-        changefreq = `<changefreq>${url.changefreq}</changefreq>`
+        const changefreq = `<changefreq>${url.changefreq}</changefreq>`
+        xmlObject += `\n\t\t${changefreq}`
       }
 
-      const xmlObject = `<url><loc>${this.baseUrl}${url.outputPath}</loc>
-                ${alternates}
-                ${priority}
-                ${changefreq}
-                <lastmod>${date}</lastmod>
-                </url>`
+      const lastmod = `<lastmod>${date}</lastmod>`
+      xmlObject += `\n\t\t${lastmod}\n\t</url>\n`
 
-      fs.writeFileSync(path.resolve(this.targetDirectory, './', this.sitemapFilename), xmlObject, {
-        flag: 'as'
-      })
+      fs.writeFileSync(
+        path.resolve(this.targetDirectory, './', this.sitemapFilename),
+        xmlObject,
+        {
+          flag: 'as'
+        }
+      )
     })
   }
 }

@@ -1,6 +1,7 @@
 import Core from './core'
+import InterfaceConfig from './InterfaceConfig'
 
-module.exports = async function (config) {
+export default async function(config: InterfaceConfig) {
   if (!config) {
     throw new Error('Config is mandatory')
   }

@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "outDir": "./",
+    "outDir": "./lib",
     "module": "commonjs",
     "preserveConstEnums": true,
     "sourceMap": false,

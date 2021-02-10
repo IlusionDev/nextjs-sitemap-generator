@@ -2,7 +2,7 @@
   "name": "nextjs-sitemap-generator",
   "version": "1.3.0",
   "description": "Generate sitemap.xml from nextjs pages",
-  "main": "index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "yarn jest && tsc",
     "tsc": "tsc"

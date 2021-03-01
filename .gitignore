@@ -3,3 +3,6 @@
 package-lock.json
 example/static/main.xml
 /lib
+src	
+example	
+tsconfig.json

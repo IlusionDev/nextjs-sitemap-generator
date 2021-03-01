@@ -140,7 +140,7 @@ After generating the output files, run `node your_nextjs_sitemap_generator.js` t
 
   
 
-If your pages are statically served then you will need to set the `showExtensions` option as `true` so that the pages contain the extension, most cases being `.html`.
+If your pages are statically served then you will need to set the `allowFileExtensions` option as `true` so that the pages contain the extension, most cases being `.html`.
 
 #### Usage with `getStaticPaths`
 

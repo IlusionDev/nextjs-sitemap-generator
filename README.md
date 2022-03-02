@@ -1,8 +1,10 @@
+
 ![npmv1](https://img.shields.io/npm/v/nextjs-sitemap-generator.svg)
 
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 
-  
+  ## DEPRECATION
+**Due to new emerging libraries doing the same functionability this library is marked as deprecated and consider using [Next-Sitemap](https://github.com/iamvishnusankar/next-sitemap) library.**
 
 We are looking for maintainers because I don't have enough time to maintain the package.
 
